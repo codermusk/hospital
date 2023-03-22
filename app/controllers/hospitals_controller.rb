@@ -1,20 +1,20 @@
-class HospitalController < ApplicationController
+class HospitalsController < ApplicationController
   def index
     @hospitals = Hospital.all
   end
 
   def show
-    @hospitals = Hospital.find(params[:id])
+    @hospital = Hospital.find(params[:id])
   end
 
   def new
-    @hospitals = Hospital.new
+    @hospital = Hospital.new
   end
 
   def  create
-    @hospitals = Hospital.new hospital_params
+    @hospital = Hospital.new hospital_params
 
-    if  @hospitals.save
+    if  @hospital.save
       redirect_to @hospital
     else
     render :new,status: :unprocessable_entity
@@ -22,13 +22,17 @@ class HospitalController < ApplicationController
   end
 
   def edit
-    @hospitals = Hospital.find params[:id]
-    if @hospitals.update hospital_params
+    @hospital = Hospital.find params[:id]
+  end
+
+  def update
+    @hospital = Hospital.find params[:id]
+    if @hospital.update hospital_params
       redirect_to @hospital
     else
-      render :new , status: :unprocessable_entity
-
+      render :edit , status: :unprocessable_entity
     end
+
 
   end
   private

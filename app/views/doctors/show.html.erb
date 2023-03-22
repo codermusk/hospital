@@ -1,0 +1,33 @@
+<div class="ui container " style="padding: 70px">
+
+<div class="ui segment">
+  <h1>
+    Name : Dr.
+    <%= @doctor.name %>
+  </h1>
+  <p style="font-size: 20px">
+    Area of Specialization :
+    <%= @doctor.specialization %>
+  </p>
+<div class="center aligned ui container">
+  <%= form_with url: book_appointment_path(@doctor) , scope: Appointment, method: :post do |form| %>
+<%= form.label :appointment_date , "Appointment date" , style:'font-size:17px' %>
+  <%= form.date_field :appointment_date%>
+    <% aptime = [['10 AM' , '10 AM'],['11 AM' , '11 AM'],['12 PM' , '12 PM'],['1 PM' , '1 PM'],['2 PM' , '2 PM'],['3 PM' , '3 PM'],['4 PM' , '4 PM'],['5 PM' , '5 PM']] %>
+    <%= form.select :time , aptime %>
+    <%#= form.options_for_select(aptime) %>
+    <br>
+    <br>
+
+
+    <%= form.submit "Book Appointment", class: 'btn btn-primary' , data:{confirm: 'Are you Sure' }  %>
+
+
+  <% end %>
+  <br>
+
+
+
+</div>
+</div>
+</div>

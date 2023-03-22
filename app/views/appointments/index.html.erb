@@ -1,0 +1,20 @@
+<div class="ui middle aligned container" style="height: 100%">
+
+   <% if @appointments.count == 0%>
+    <div class="ui center aligned container" style="padding-top: 160px">
+      <h2>
+        No Appointments to Show
+      </h2>
+    </div>
+    <%else %>
+
+    <div class="ui placeholder segment">
+      <% @appointments.each do |appointment| %>
+        <%= appointment.time %>
+      <% end %>
+    </div>
+    <%end %>
+
+
+  </div>
+</div>
