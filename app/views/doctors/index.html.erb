@@ -1,0 +1,47 @@
+<div class="ui placeholder segment massive">
+
+    <% @doctors.each do |doctor| %>
+     <div class="ui segment massive">
+       <div class="ui segments" style="display: flex;flex-direction: row;justify-content: space-between;align-items: center">
+         <div style="width:20%">
+           <div class="item ui label massive  " >
+             <i class="doctor icon">
+              <h1>
+                <%= doctor.name %>
+              </h1>
+             </i>
+           </div>
+         </div>
+         <div style="padding: 0px 10px; width:20%;">
+           <strong style="font-size: 20px">
+             Specialization:
+             <%= doctor.specialization %>
+           </strong>
+         </div>
+       </div>
+    <div style="display: flex; justify-content: space-between">
+
+      <div>
+        Patients Attended :
+        <%= Appointment.where(status: 1).count  %>
+      </div>
+      <div>
+        <%= link_to 'Book Appointment' , doctor , class: "ui  teal  label massive" %>
+      </div>
+
+    </div>
+
+       <div>
+         Mail :
+         <%= doctor.email %>
+       </div>
+
+
+       </div>
+
+    <% end %>
+</div>
+
+  </div>
+
+</div>
