@@ -9,8 +9,14 @@ class AppointmentsController < ApplicationController
     end
   end
   def index
-    @patient = Patient.first!
+    if current_account.accountable_type == "Doctor"
+      @doctor = Doctor.find(params[:doctor_id])
+      @appointments = @doctor.appointments
+
+    else
+    @patient = Patient.find(params[:patient_id])
     @appointments = @patient.appointments
+    end
   end
 
   def destroy

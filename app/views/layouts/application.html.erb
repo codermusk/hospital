@@ -24,11 +24,21 @@
     <a class="item" >Testimonials</a>
 
     <div class = "right menu">
-      <%= link_to "My Appointmens" , patient_appointments_path(Patient.first) , class:'item' %>
-      <a class="item"> Edit Profile</a>
-     <%= link_to "Sign Up" , new_account_registration_path , class:'item' %>
 
-    </div>
+<!--      <a class="item"> Edit Profile</a>-->
+     <% if current_account %>
+        <% if current_account.accountable_type=='Patient' %>
+          <%= link_to "My Appointments" , patient_appointments_path(current_account.accountable_id) , class:'item' %>
+          <%= link_to "Log out " , destroy_account_session_path , method: :delete , class:'item' %>
+        <%else %>
+
+          <%= link_to "Logout" , destroy_account_session_path , class:'item' %>
+        <%end %>
+        <% else %>
+<%= link_to "Sign up" ,  new_account_registration_path  , class: 'item' %>
+<% end %>
+
+        </div>
   </div>
 <% if notice %>
     <div class="ui positive message" style="padding-left: 44% ">

@@ -8,5 +8,6 @@ class Doctor < ApplicationRecord
   validates :age , presence:true
   validates :dateofjoining , presence:true
   validates :dateofjoining , presence:true
+  has_one :account  , :as => :accountable
 
 end
