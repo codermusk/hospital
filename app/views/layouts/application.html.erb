@@ -21,15 +21,20 @@
     </div>
     <a class="item">About us</a>
     <a class="item">Ratings and Our Partners</a>
-    <a class="item">Testimonials</a>
+    <a class="item" >Testimonials</a>
 
     <div class = "right menu">
       <%= link_to "My Appointmens" , patient_appointments_path(Patient.first) , class:'item' %>
       <a class="item"> Edit Profile</a>
-      <a class ="item"> SignUp / Login</a>
+     <%= link_to "Sign Up" , new_account_registration_path , class:'item' %>
 
     </div>
   </div>
+<% if notice %>
+    <div class="ui positive message" style="padding-left: 44% ">
+      <%= notice  %>
+    </div>
+    <%end %>
     <%= yield %>
   </body>
 </html>

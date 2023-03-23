@@ -10,7 +10,30 @@
 
     <div class="ui placeholder segment">
       <% @appointments.each do |appointment| %>
-        <%= appointment.time %>
+      <div class="ui segment">
+        <h1>
+          Doctor :
+          <%= appointment.doctor.name %>
+        </h1>
+       <h1>
+         Appointment Date :
+         <%= appointment.appointment_date.strftime("%d/%m/%Y") %>
+       </h1>
+
+        <h2>
+          Appointment Time
+          <%= appointment.time %>
+        </h2>
+
+
+ <div class="ui center aligned ">
+   <%= link_to "Delete Appointment" , appointment_path(appointment), method: :delete , data:{
+     confirm: "Are you sure?"
+   } %>
+ </div>
+
+
+      </div>
       <% end %>
     </div>
     <%end %>

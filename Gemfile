@@ -55,4 +55,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'psych', '<4'
 gem 'fomantic-ui-sass'
 gem 'bootstrap-sass'
+gem 'devise'
 
