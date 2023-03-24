@@ -14,7 +14,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
 
-    patient = Patient.create()
+    patient = Patient.create
     resource.accountable_id = patient.id
     resource.accountable_type = "Patient"
     p resource

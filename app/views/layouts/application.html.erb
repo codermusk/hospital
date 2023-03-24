@@ -32,7 +32,7 @@
           <%= link_to "Log out " , destroy_account_session_path , method: :delete , class:'item' %>
         <%else %>
 
-          <%= link_to "Logout" , destroy_account_session_path , class:'item' %>
+          <%= link_to "Logout" , destroy_account_session_path , method: :delete, class:'item' %>
         <%end %>
         <% else %>
 <%= link_to "Sign up" ,  new_account_registration_path  , class: 'item' %>

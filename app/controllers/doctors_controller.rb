@@ -16,7 +16,9 @@ class DoctorsController < ApplicationController
   def create
     @hospital  = Hospital.first!
     @doctor = @hospital.doctors.create doctor_params
+    if @doctor.save
     redirect_to hospital_path(@hospital)
+    end
 
 
   end
