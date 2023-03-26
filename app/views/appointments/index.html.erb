@@ -1,12 +1,12 @@
 <div class="ui middle aligned container" style="height: 100%">
 
-   <% if @appointments.count == 0%>
+   <% if @appointments.count == 0 %>
     <div class="ui center aligned container" style="padding-top: 160px">
       <h2>
         No Appointments to Show
       </h2>
     </div>
-    <%else %>
+    <% elsif current_account.accountable_type=='Patient'%>
 
     <div class="ui placeholder segment">
       <% @appointments.each do |appointment| %>
@@ -25,19 +25,63 @@
           <%= appointment.time %>
         </h2>
 
+        <% if appointment.status == 0%>
+          <a class="ui label">Pending</a>
 
- <div class="ui center aligned ">
-   <%= link_to "Delete Appointment" , appointment_path(appointment), method: :delete , data:{
-     confirm: "Are you sure?"
-   } %>
- </div>
+          <%= button_to "Delete Appointment" , appointment_path(appointment), method: :delete , data:{
+            confirm: "Are you sure?"
+          },class: 'ui  red button' %>
+          <% else %>
+          <a class="ui teal label">Approved</a>
+          <%end %>
+
+
+
+
 
 
       </div>
       <% end %>
     </div>
+    </div>
+    </div>
+      <%else %>
+    <div class="ui placeholder segment">
+      <% @appointments.each do |appointment| %>
+        <div class="ui segment">
+          <h1>
+            Patient Name :
+            <%= appointment.patient.name %>
+          </h1>
+          <h1>
+            Appointment Date :
+            <%= appointment.appointment_date.strftime("%d/%m/%Y") %>
+          </h1>
+
+          <h2>
+            Appointment Time
+            <%= appointment.time %>
+          </h2>
+          <% if appointment.status == 0  %>
+          <%= button_to "Confirm" , appointment_path(appointment) , method: :put , class: 'ui success green button' %>
+
+            <%= button_to "Remove" , appointment_path(appointment), method: :delete , data:{
+              confirm: "Are you sure?"
+            } , class: 'ui red button' %>
+            <% else %>
+          <div class="ui teal label">
+            Approved
+          </div>
+          <% end %>
+
+        </div>
+
+    <% end %>
+
+
+
     <%end %>
 
 
-  </div>
+
 </div>

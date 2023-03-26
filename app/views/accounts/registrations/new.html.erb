@@ -7,12 +7,34 @@
 
       <%= render "accounts/shared/error_messages", resource: resource %>
 
-      <%= form_with model: @patient do |form| %>
-      <div class="field">
-        <%= form.label :name %>
-        <%=  %>
+      <%= fields_for :patient do |form| %>
+        <%= form.label :name , style:"font-size:20px ; padding-left:40px " %>
+<div class="ui input focus">
 
-      </div>
+        <%= form.text_field :name , style:"padding-right:60px"  %>
+</div>
+
+
+        <%= form.label :sex , style:"font-size:20px ; padding-left:40px " %>
+        <div class="ui input"  >
+
+          <%= form.radio_button :sex , "Male"%>
+          <%= form.label :sex_Male , "Male" %>
+          <%= form.radio_button :sex , "Female"%>
+          <%= form.label :sex_Female , "Female" %>
+
+        </div>
+        <div class="field">
+          <%= form.label :age %>
+          <%= form.number_field :age %>
+
+
+        </div>
+        <div class="field">
+          <%= form.label :phone%>
+          <%= form.telephone_field   :mobile_number%>
+
+        </div>
 
       <% end %>
 
@@ -42,7 +64,7 @@
     <% end %>
     <br>
 
-<div class="field" , style="padding-right: 98px">
+<div class="field"  style="padding-right: 98px">
   <%= render "accounts/shared/links" %>
 </div>
 

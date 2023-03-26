@@ -14,7 +14,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
 
-    patient = Patient.create
+    patient = Patient.create(patient_params)
     resource.accountable_id = patient.id
     resource.accountable_type = "Patient"
     p resource
@@ -35,6 +35,10 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       set_minimum_password_length
       respond_with resource
     end
+  end
+
+  def patient_params
+    params.require(:patient).permit(:name , :age , :sex  , :mobile_number)
   end
 
   # GET /resource/edit
