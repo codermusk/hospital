@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_23_084120) do
+ActiveRecord::Schema.define(version: 2023_03_27_044917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 2023_03_23_084120) do
     t.string "time"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
+  end
+
+  create_table "bills", force: :cascade do |t|
+    t.integer "doctor_fees"
+    t.boolean "status", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "prescribtion_id"
+    t.index ["prescribtion_id"], name: "index_bills_on_prescribtion_id"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -73,6 +82,13 @@ ActiveRecord::Schema.define(version: 2023_03_23_084120) do
     t.integer "age"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "prescribtions", force: :cascade do |t|
+    t.string "tablets"
+    t.bigint "appointment_id"
+    t.string "comments"
+    t.index ["appointment_id"], name: "index_prescribtions_on_appointment_id"
   end
 
 end

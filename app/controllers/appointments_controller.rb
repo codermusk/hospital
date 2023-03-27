@@ -14,11 +14,11 @@ class AppointmentsController < ApplicationController
   end
   def index
     if current_account.accountable_type == "Doctor"
-      @doctor = Doctor.find(params[:doctor_id])
+      @doctor = Doctor.find(current_account.accountable_id)
       @appointments = @doctor.appointments
 
     else
-    @patient = Patient.find(params[:patient_id])
+    @patient = Patient.find(current_account.accountable_id)
     @appointments = @patient.appointments
     end
   end

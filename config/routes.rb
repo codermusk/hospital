@@ -15,4 +15,15 @@ Rails.application.routes.draw do
     resources :appointments , shallow: true
   end
   post "doctors/:doctor_id/appointments/book", to: "appointments#book", as: :book_appointment
+
+  resources :appointments do
+    resources :prescribtions , shallow:true
+
+  end
+
+  resources :prescribtions do
+    resources :bill
+  end
+
+
 end

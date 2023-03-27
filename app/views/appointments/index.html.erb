@@ -35,11 +35,20 @@
           <a class="ui teal label">Approved</a>
           <%end %>
 
+        <% if appointment.prescribtion %>
+        <% if appointment.prescribtion.bill.status  %>
+
+     <%= link_to "Prescription" , prescribtion_path(appointment.prescribtion) ,  class:"ui green button" %>
+            <% else %>
+          <%= link_to "Pay Bill" , prescribtion_bill_path(appointment.prescribtion,appointment.prescribtion.bill) , method: :put , class: "ui green button" , data:{
+            confirm: "Pay the bill ?"
+          } %>
+
+        <%end %>
 
 
 
-
-
+          <% end %>
       </div>
       <% end %>
     </div>
@@ -72,7 +81,14 @@
           <div class="ui teal label">
             Approved
           </div>
+            <% if appointment.prescribtion %>
+              <%= link_to "Edit Prescription " , edit_prescribtion_path(appointment.prescribtion), class: "ui green button"%>
+            <%else %>
+              <%= link_to "Prescription " , new_appointment_prescribtion_path(appointment) , class: "ui green button"%>
+            <%end %>
+
           <% end %>
+
 
         </div>
 

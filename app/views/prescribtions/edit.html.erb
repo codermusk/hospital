@@ -1,0 +1,12 @@
+<div class="ui placeholder segment ">
+  <%= form_with model: @prescribtion, class: "ui form"  do |f|  %>
+  <%= f.label :comments %>
+    <%=f.text_area :comments  %>
+    <%= f.label :tablets %>
+    <%= f.text_area :tablets %>
+    <%= f.submit %>
+
+    <% end%>
+
+
+</div>

@@ -1,0 +1,16 @@
+<div class="ui placeholder segment" , style="padding: 140px">
+  <%= form_with url: appointment_prescribtions_path(params[:appointment_id]), class: "ui form" , method: :post  , scope:  :prescribtion do |f|  %>
+
+    <%= fields_for :bill_attributes do|field| %>
+      <%= field.label :doctor_fees , class:"ui input" %>
+      <%= field.text_field :doctor_fees %>
+    <% end %>
+    <%= f.label :tablets %>
+    <%= f.text_area :tablets , class: "ui input"%> <%= f.label :comments %>
+    <%= f.text_area :comments , class: "ui input"%>
+    <%= f.submit %>
+
+
+
+  <% end %>
+</div>
