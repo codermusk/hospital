@@ -36,6 +36,12 @@ Rails.application.routes.draw do
     resources :ratings , shallow: true
   end
 
+  namespace :api , :defaults => {:format => :json} do
+    resources :hospitals , only: [:index , :show] do
+      resources :doctors , shallow: true , only: [:index , :show ]
+    end
+  end
+
 
 
 end

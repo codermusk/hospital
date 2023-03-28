@@ -6,6 +6,9 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Intern Project"
 
+  config.comments = false
+  config.footer = "My Hospital"
+
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
