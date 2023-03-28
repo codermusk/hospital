@@ -5,9 +5,9 @@ class Patient < ApplicationRecord
   has_one :account , :as =>  :accountable
   validates :name , presence:true
   validates :age , presence:true
-  validates :email , presence:true
+
   validates :sex , presence:true
   validates :mobile_number , presence:true
-  validates :address
+
   # belongs_to :doctor
 end

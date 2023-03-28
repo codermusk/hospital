@@ -1,12 +1,29 @@
-<div class="ui placeholder segment ">
-  <%= form_with model: @prescribtion, class: "ui form"  do |f|  %>
-  <%= f.label :comments %>
-    <%=f.text_area :comments  %>
+<div class="ui  segment " style="padding:10%">
+  <div class="ui placeholder segment"  >
+
+
+  <%= form_with model: @prescribtion, class: "ui form", html: {style:"font-size:2rem !important;" } do |f|  %>
+    <div >
+      <%= f.label :comments %>
+      <div class="ui input" style="width: 100%">
+        <%=f.text_area :comments, style: "max-width: initial;"  %>
+      </div>
+
+    </div>
+<div>
+  <br>
+
+
+
     <%= f.label :tablets %>
-    <%= f.text_area :tablets %>
+  <div class="ui input" style="width: 100%">
+    <%= f.text_area :tablets, style: "max-width: initial;" %>
+  </div>
+</div>
+    <br>
     <%= f.submit %>
 
     <% end%>
-
+  </div>
 
 </div>

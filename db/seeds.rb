@@ -30,4 +30,4 @@
 #                  } ,
 #                  {
 #                    name:'Kauveri Hospital' , address: 'Coimbatore West ' , mail: 'kauveri@gmail.com'
-#                  }])
+#                  }])AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

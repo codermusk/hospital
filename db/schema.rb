@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_27_145418) do
+ActiveRecord::Schema.define(version: 2023_03_28_044038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,8 @@ ActiveRecord::Schema.define(version: 2023_03_27_145418) do
     t.integer "rating"
     t.string "ratable_type", null: false
     t.bigint "ratable_id", null: false
+    t.bigint "patient_id"
+    t.index ["patient_id"], name: "index_ratings_on_patient_id"
     t.index ["ratable_type", "ratable_id"], name: "index_ratings_on_ratable_type_and_ratable_id"
   end
 

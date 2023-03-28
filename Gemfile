@@ -57,4 +57,5 @@ gem 'psych', '<4'
 gem 'fomantic-ui-sass'
 gem 'bootstrap-sass'
 gem 'devise'
+gem 'activeadmin'
 

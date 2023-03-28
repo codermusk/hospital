@@ -14,11 +14,14 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
 
-    patient = Patient.create(patient_params)
-    resource.accountable_id = patient.id
-    resource.accountable_type = "Patient"
-    p resource
-    resource.save
+    patient = Patient.new(patient_params)
+    if patient.save!
+      resource.accountable_id = patient.id
+      resource.accountable_type = "Patient"
+      p resource
+      resource.save
+    end
+
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?

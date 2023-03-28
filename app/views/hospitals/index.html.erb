@@ -16,7 +16,9 @@
       Number of Doctors
       <%= hospital.doctors.count %>
     </h2>
-
+<div class="ui right aligned ">
+  <%= link_to 'Ratings and Reviews' , hospital_ratings_path(hospital_id: hospital) , class:"btn btn-secondary" %>
+</div>
   </div>
     <div class="center aligned"></div>
     <%= link_to ' Show Doctors ‍👩🏻‍⚕️' , hospital_doctors_path(hospital_id: hospital) , class: "btn btn-primary" %>
