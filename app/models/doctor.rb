@@ -1,7 +1,6 @@
 class Doctor < ApplicationRecord
   has_many :appointments
   has_many :ratings , as: :ratable
-
   has_and_belongs_to_many :hospitals ,join_table: :hospital_doctors
   has_many :patients , through: :appointments
   validates :name , presence: true

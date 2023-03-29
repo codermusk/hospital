@@ -24,7 +24,7 @@ class PrescribtionsController < ApplicationController
   def update
     @prescribtion = Prescribtion.find(params[:id])
     if @prescribtion.update prescribtion_params
-      redirect_to doctor_appointments_path(current_account.accountable_id) , status: "Prescription Updated"
+      redirect_to doctor_appointments_path(current_account.accountable_id) , notice: "Prescription Updated"
 
     end
   end

@@ -27,17 +27,6 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.find params[:id]
   end
 
-  def update
-    @doctor = Doctor.find params[:id]
-
-
-    if @doctor.update doctor_params
-      redirect_to @doctor
-    else
-      render :edit , status: :unprocessable_entity
-
-    end
-  end
 
   private
   def doctor_params

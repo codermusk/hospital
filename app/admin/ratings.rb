@@ -6,6 +6,10 @@ ActiveAdmin.register Rating do
   # Uncomment all parameters which should be permitted for assignment
   #
   permit_params :review, :rating, :ratable_type, :ratable_id, :patient_id
+  scope :get_ratings_hos
+  scope :get_ratings_doc
+  scope :get_all
+  # scope default
   #
   # or
   #

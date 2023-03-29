@@ -1,5 +1,8 @@
 ActiveAdmin.register Doctor do
   permit_params :name ,  :age ,:email , :address , :dateofjoining , :status , :specialization , account_attributes: [:email , :password , :password_confirmation]
+  filter :email
+  filter :age
+  filter :hospitals
   form do |f|
     f.semantic_errors
     f.inputs
