@@ -41,6 +41,9 @@ Rails.application.routes.draw do
       resources :doctors , shallow: true , only: [:index , :show ]
     end
   end
+  namespace :api , :defaults => {:format => :json} do
+    resources :patients , only: [:index , :show , :update , :edit , :create]
+  end
 
 
 

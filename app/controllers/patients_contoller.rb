@@ -1,4 +1,7 @@
 class PatientsController < ApplicationController
+  def index
+    @patients = Patient.all
+  end
 
   def edit
     @patient = Patient.find(current_account.accountable_id )

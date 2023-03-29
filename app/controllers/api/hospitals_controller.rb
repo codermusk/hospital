@@ -10,6 +10,7 @@ class Api::HospitalsController < ApplicationController
 
     def show
       @hospital = Hospital.find(params[:id])
+      render json: @hospital , status: 200
       end
     def  create
       @hospital = Hospital.new hospital_params
