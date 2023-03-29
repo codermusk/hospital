@@ -11,4 +11,19 @@ class Api::DoctorsController < ApplicationController
   end
 
 
+  def create
+    @hospital = Hospital.new hosp_params
+    if @hospital.save
+      render json: @hospital , status:200
+    else
+      render json:{error:"Not Created"} , status:405
+    end
+
+
+  end
+
+  private
+  def hosp_params
+    params.require(:hospital).permit(:name , :mail , :address)
+  end
 end
