@@ -5,7 +5,7 @@ ActiveAdmin.register Rating do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :review, :rating, :ratable_type, :ratable_id, :patient_id
+  permit_params :review, :rating, :ratable_type, :ratable_id, :patient_id
   #
   # or
   #
