@@ -13,5 +13,9 @@ ActiveAdmin.register Patient do
     end
     f.actions
   end
+  filter :email
+  filter :name
+  filter :mobil_number
+  filter :sex
   
 end

@@ -11,16 +11,18 @@ ActiveAdmin.register Rating do
   index do
     selectable_column
     id_column
-    column :ratable
+    column  :ratable
     column :rating
     column :review
 
+
   end
 
-  filter :rating
+  filter  :rating ,label: "Rating Provided"
+  filter :patient_id
   # filter :ratable
-  scope "Doctors" ,:get_ratings_hos
-  scope "Hospital" ,:get_ratings_doc
+  scope "Hospital" ,:get_ratings_hos
+  scope "Doctor" ,:get_ratings_doc
 
   # scope default
   #

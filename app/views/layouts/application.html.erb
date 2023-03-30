@@ -28,8 +28,10 @@
 <!--      <a class="item"> Edit Profile</a>-->
      <% if current_account %>
         <% if current_account.accountable_type=='Patient' %>
+          <%= link_to "Book Appointment" ,root_url , class: 'item' %>
           <%= link_to "My Appointments" , patient_appointments_path(current_account.accountable_id) , class:'item' %>
           <%= link_to "Log out " , destroy_account_session_path , method: :delete , class:'item' %>
+
         <%else %>
 
           <%= link_to "Logout" , destroy_account_session_path , method: :delete, class:'item' %>

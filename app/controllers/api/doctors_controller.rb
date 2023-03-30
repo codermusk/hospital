@@ -8,8 +8,12 @@ class Api::DoctorsController < ApplicationController
 
   def  showRating
     @doctor = Doctor.find(params[:id])
+    if @doctor
     @ratings = @doctor.ratings
     render json: @ratings , status: 200
+    else
+      render json:{error:"No doctor Found"} , status: 422
+     end
   end
 
 

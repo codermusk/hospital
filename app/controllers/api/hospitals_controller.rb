@@ -12,8 +12,12 @@ class Api::HospitalsController < ApplicationController
 
   def  showRatings
     @hospital  = Hospital.find(params[:id])
+    if @hospital
     @ratings  = @hospital.ratings
     render json: @ratings , status:200
+    else
+      render json:{error:"Not Found"} , status:422
+      end
   end
 
     def show

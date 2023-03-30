@@ -6,6 +6,7 @@ ActiveAdmin.register Prescribtion do
   # Uncomment all parameters which should be permitted for assignment
   #
   permit_params :tablets, :appointment_id, :comments
+  filter :tablets
   #
   # or
   #

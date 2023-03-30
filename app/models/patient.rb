@@ -7,6 +7,7 @@ class Patient < ApplicationRecord
   validates :age , presence:true
   validates :email , uniqueness: true
   accepts_nested_attributes_for :account
+  has_many :ratings  , dependent: :destroy
 
   validates :sex , presence:true
   validates :mobile_number , presence:true
