@@ -9,6 +9,13 @@ class Api::HospitalsController < ApplicationController
       render json: @hospitals , status: 200
     end
 
+
+  def  showRatings
+    @hospital  = Hospital.find(params[:id])
+    @ratings  = @hospital.ratings
+    render json: @ratings , status:200
+  end
+
     def show
       @hospital = Hospital.find(params[:id])
       render json: @hospital , status: 200

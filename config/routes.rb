@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :accounts, controllers: {
@@ -8,6 +9,8 @@ Rails.application.routes.draw do
   root "hospitals#index"
   post ":ratable/:ratable_id/ratings", to: "ratings#create"
   get  ":ratable/:ratable_id/ratings", to:"ratings#index"
+  get  "api/doctors/:id/ratings" , to:"api/doctors#showRating"
+  get "api/hospitals/:id/ratings" , to:"api/hospitals#showRatings"
   resources :hospitals do
     resources :doctors, shallow: true do
       resources :ratings , shallow:true
@@ -44,6 +47,8 @@ Rails.application.routes.draw do
     resources :ratings , shallow: true
   end
 
+
+
   namespace :api , :defaults => {:format=> :json} do
     resources :appointments do
       resources :prescribtions , shallow:true
@@ -73,6 +78,18 @@ Rails.application.routes.draw do
 
   end
 
+  namespace :api , :defaults =>{:format => :json} do
+    resources :doctors do
+      resources :ratings , shallow: true
+    end
+  end
+
+
+  namespace :api , :defaults =>{:format => :json} do
+    resources :hospitals do
+      resources :ratings , shallow: true
+    end
+  end
 
 
 end

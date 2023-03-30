@@ -6,6 +6,14 @@ class Api::DoctorsController < ApplicationController
 
   end
 
+  def  showRating
+    @doctor = Doctor.find(params[:id])
+    @ratings = @doctor.ratings
+    render json: @ratings , status: 200
+  end
+
+
+
   def show
     @doctor = Doctor.find params[:id]
     render json: @doctor , status:200

@@ -57,4 +57,5 @@ gem 'fomantic-ui-sass'
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'activeadmin'
+gem 'doorkeeper'
 
