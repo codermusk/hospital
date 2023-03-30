@@ -4,9 +4,8 @@ class AppointmentsController < ApplicationController
     @appointment = current_account.accountable.appointments.create appointment_params
     @appointment.doctor_id = params[:doctor_id]
     @doctor = Doctor.find(params[:doctor_id])
-    @hospital = @doctor.hospital.id
     if @appointment.save
-      redirect_to hospital_doctors_path(@hospital) , notice: "Appointment Booked Successfully"
+      redirect_to @doctor , notice: "Appointment Booked Successfully"
     end
     else
       redirect_to hospitals_path , notice: "Login to Book Appointment"

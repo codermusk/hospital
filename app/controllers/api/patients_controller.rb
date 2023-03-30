@@ -36,7 +36,12 @@ class Api::PatientsController < ApplicationController
 
   end
 
-  def patient_params
-    params.require(:patient).permit(:name , :sex , :email , :mobile_number , :age, :address )
+  def destroy
+    @patient = Patient.find(params[:id])
+    if @patient.destroy
+      render json: {success:"Deleted Successfully"} , status:200
+    end
   end
+
+
 end
