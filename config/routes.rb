@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get  ":ratable/:ratable_id/ratings", to:"ratings#index"
   get  "api/doctors/:id/ratings" , to:"api/doctors#showRating"
   get "api/hospitals/:id/ratings" , to:"api/hospitals#showRatings"
+  get "api/doctors/:id/hospitals"  , to:"api/doctors#showHospitals"
+  get "api/bill/:id/prescribtion" , to:"api/bill#showPresc"
   resources :hospitals do
     resources :doctors, shallow: true do
       resources :ratings , shallow:true

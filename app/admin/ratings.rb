@@ -14,12 +14,13 @@ ActiveAdmin.register Rating do
     column  :ratable
     column :rating
     column :review
+    column :patient_id
 
 
   end
 
   filter  :rating ,label: "Rating Provided"
-  filter :patient_id
+  filter :patient_id  ,collection: ->{patient.all.map {|pat| [pat.name , pat.id]}}
   # filter :ratable
   scope "Hospital" ,:get_ratings_hos
   scope "Doctor" ,:get_ratings_doc

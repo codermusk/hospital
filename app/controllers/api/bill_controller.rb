@@ -11,6 +11,13 @@ class Api::BillController < ApplicationController
 
   end
 
+
+  def showPresc
+    @bill = Bill.find(params[:id])
+    @prescribtion = @bill.prescribtion
+    render json: @prescribtion , status: 200
+  end
+
   def show
     @bill = Bill.find(params[:id])
     render json: @bill ,status: 200
