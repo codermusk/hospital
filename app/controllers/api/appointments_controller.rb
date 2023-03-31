@@ -1,6 +1,7 @@
-class Api::AppointmentsController < ApplicationController
+class Api::AppointmentsController < Api::ApiController
+  before_action :doorkeeper_authorize!
 
-  skip_before_action :verify_authenticity_token
+
   def book
     if current_account
       @appointment = current_account.accountable.appointments.create appointment_params
@@ -8,10 +9,10 @@ class Api::AppointmentsController < ApplicationController
       @doctor = Doctor.find(params[:doctor_id])
 
       if @appointment.save
-        redirect_to @doctor , notice: "Appointment Booked Successfully"
+        render json: @appointment , status: 200
       end
     else
-      redirect_to hospitals_path , notice: "Login to Book Appointment"
+      render json:{error:"forbidden"} , status: :forbidden
     end
   end
   def index
@@ -19,10 +20,13 @@ class Api::AppointmentsController < ApplicationController
     if  current_account&.accountable_type == "Doctor"
       @doctor = Doctor.find(current_account.accountable_id)
       @appointments = @doctor.appointments
+      render json: @appointments , status: 200
 
     elsif current_account
       @patient = Patient.find(current_account.accountable_id)
       @appointments = @patient.appointments
+      p @appointments
+      render json:@appointments , status:200
     end
   end
 
@@ -31,7 +35,9 @@ class Api::AppointmentsController < ApplicationController
     status = Hash.new
     status['status'] =1
     if @appointment.update(status)
-      redirect_to doctor_appointments_path(current_account.accountable_id)
+      render @appointment , status: 200
+    else
+      render json: {error:@appointment.error} ,status: :forbidden
     end
   end
 
@@ -42,9 +48,9 @@ class Api::AppointmentsController < ApplicationController
     @patient = @appointment.patient
     if @appointment.destroy
       if current_account.accountable_type=="Patient"
-        redirect_to patient_appointments_path(@patient), notice: "Deleted Successfully"
+        head :success
       elsif
-      redirect_to doctor_appointments_path(current_account.accountable_id) , notice: 'Deleted Successfully'
+      head :forbidden
       end
 
     end

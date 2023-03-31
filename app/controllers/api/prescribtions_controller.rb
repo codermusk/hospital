@@ -1,5 +1,6 @@
-class Api::PrescribtionsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::PrescribtionsController < Api::ApiController
+
+  before_action :doorkeeper_authorize!
   def new
     @prescribtion = Prescribtion.new
   end

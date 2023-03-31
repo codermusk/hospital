@@ -15,6 +15,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     patient = Patient.new(patient_params)
+    patient.email = resource.email
     if patient.save!
       resource.accountable_id = patient.id
       resource.accountable_type = "Patient"

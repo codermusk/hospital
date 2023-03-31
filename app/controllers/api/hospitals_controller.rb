@@ -1,5 +1,6 @@
-class Api::HospitalsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::HospitalsController < Api::ApiController
+
+  before_action :doorkeeper_authorize!
 
     def index
       if current_account&.accountable_type =='Doctor'

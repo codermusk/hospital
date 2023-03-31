@@ -1,6 +1,7 @@
-class Api::PatientsController < ApplicationController
+class Api::PatientsController < Api::ApiController
 
-  skip_before_action :verify_authenticity_token
+
+  before_action :doorkeeper_authorize!
   def index
     @patients = Patient.all
     render  json: @patients , status: 200

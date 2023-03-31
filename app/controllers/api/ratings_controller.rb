@@ -1,5 +1,6 @@
-class Api::RatingsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::RatingsController < Api::ApiController
+
+  before_action :doorkeeper_authorize!
   def create
     @hospital = Hospital.find(params[:id])
     @rating = @hospital.ratings.build rating_params

@@ -1,5 +1,6 @@
-class Api::DoctorsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::DoctorsController < Api::ApiController
+
+  before_action :doorkeeper_authorize!
   def index
     @doctors = Hospital.find(params[:hospital_id]).doctors
     render json: @doctors , status:200
@@ -22,6 +23,7 @@ class Api::DoctorsController < ApplicationController
     render json:  @hospitals , status: 200
 
   end
+
 
 
 
