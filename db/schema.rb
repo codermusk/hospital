@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
 
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "status"
+  end
+
   create_table "bills", force: :cascade do |t|
     t.integer "doctor_fees"
     t.boolean "status", default: false
@@ -75,6 +83,16 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "prescribtion_id"
     t.index ["prescribtion_id"], name: "index_bills_on_prescribtion_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commenter"
+    t.text "body"
+    t.bigint "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "status"
+    t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -148,5 +166,6 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.index ["ratable_type", "ratable_id"], name: "index_ratings_on_ratable_type_and_ratable_id"
   end
 
+  add_foreign_key "comments", "articles"
   add_foreign_key "oauth_access_tokens", "accounts", column: "resource_owner_id"
 end

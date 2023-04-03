@@ -8,6 +8,7 @@ class PrescribtionsController < ApplicationController
     @apponintment = Appointment.find(params[:appointment_id])
     @prescribtion = @apponintment.create_prescribtion prescribtion_params
     @prescribtion.create_bill bill_params
+
     if @prescribtion.save
       redirect_to doctor_appointments_path(current_account.accountable_id) , status: "prescribed SuccessFully"
     end
