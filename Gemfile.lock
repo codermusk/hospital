@@ -104,6 +104,8 @@ GEM
       railties (>= 5)
     erubi (1.12.0)
     execjs (2.8.1)
+    factory_girl (4.9.0)
+      activesupport (>= 3.0.0)
     ffi (1.15.5)
     fomantic-ui-sass (2.8.8.1)
       autoprefixer-rails
@@ -312,6 +314,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   devise
   doorkeeper
+  factory_girl (~> 4.9)
   fomantic-ui-sass
   jbuilder (~> 2.7)
   listen (~> 3.2)
