@@ -40,10 +40,14 @@ class Api::BillController < Api::ApiController
 
   def update
     @bill = Bill.find(params[:id])
+    if current_account.accountable== @bill.prescribtion.appointment.doctor
     if @bill.update bill_params
       render json: @bill , status: 200
     else
-      render json: {error:"Unproceeable entity"} , status: 422
+      render json: {error:"Unprocessable entity"} , status: 422
+    end
+    else
+      head :forbidden
     end
 
   end

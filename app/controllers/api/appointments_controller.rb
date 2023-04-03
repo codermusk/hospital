@@ -3,7 +3,7 @@ class Api::AppointmentsController < Api::ApiController
 
 
   def book
-    if current_account
+    if current_account&.accountable_id==params[:id]
       @appointment = current_account.accountable.appointments.create appointment_params
       @appointment.doctor_id = params[:doctor_id]
       @doctor = Doctor.find(params[:doctor_id])
@@ -17,21 +17,26 @@ class Api::AppointmentsController < Api::ApiController
   end
   def index
 
-    if  current_account&.accountable_type == "Doctor"
+    if  current_account&.accountable_type == "Doctor" && current_account.id==params[:id]
       @doctor = Doctor.find(current_account.accountable_id)
       @appointments = @doctor.appointments
       render json: @appointments , status: 200
 
-    elsif current_account
+    elsif current_account&.accountable_id==params[:id]
       @patient = Patient.find(current_account.accountable_id)
       @appointments = @patient.appointments
-      p @appointments
+      # p @appointments
       render json:@appointments , status:200
+    else
+      render json: {error:"not allowed method"} , status: :forbidden
     end
   end
 
   def update
     @appointment = Appointment.find(params[:id])
+  end
+    if current_account&.accountable_type=="Doctor" && current_account.accountable_id==@appointment.doctor_id
+
     status = Hash.new
     status['status'] =1
     if @appointment.update(status)
@@ -45,12 +50,9 @@ class Api::AppointmentsController < Api::ApiController
 
   def destroy
     @appointment = Appointment.find(params[:id])
-    @patient = @appointment.patient
-    if @appointment.destroy
-      if current_account.accountable_type=="Patient"
+    if current_account&.accountable_id==@appointment.patient_id || current_account&.accountable_id==@appointment.doctor_id
+      if @appointment.destroy
         head :success
-      elsif
-      head :forbidden
       end
 
     end

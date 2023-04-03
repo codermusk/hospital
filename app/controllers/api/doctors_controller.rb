@@ -29,8 +29,15 @@ class Api::DoctorsController < Api::ApiController
 
 
   def show
+
     @doctor = Doctor.find params[:id]
-    render json: @doctor , status:200
+    if current_account.accountable == @doctor
+      render json: @doctor , status:200
+    else
+      head :forbidden
+    end
+
+
   end
 
   def create
@@ -52,7 +59,18 @@ class Api::DoctorsController < Api::ApiController
     end
   end
 
-
+  def update
+    @doctor = Doctor.find(params[:id])
+    if current_account.accountable == @doctor
+      if @doctor.update doctor_params
+        render json: @doctor , status: 201
+      else
+        render json: {error:"Method not allowed"} , status: 405
+      end
+    else
+      head :forbidden
+    end
+  end
 
 
 

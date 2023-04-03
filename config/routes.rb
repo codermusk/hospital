@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get "api/hospitals/:id/ratings" , to:"api/hospitals#showRatings"
   get "api/doctors/:id/hospitals"  , to:"api/doctors#showHospitals"
   get "api/bill/:id/prescribtion" , to:"api/bill#showPresc"
+  post "api/:ratable/:ratable_id/ratings", to: "api/ratings#create"
+  get  "api/:ratable/:ratable_id/ratings", to:"api/ratings#index"
+
   resources :hospitals do
     resources :doctors, shallow: true do
       resources :ratings , shallow:true
@@ -64,7 +67,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api , :defaults => {:format => :json} do
-    resources :hospitals , only: [:index , :show , :update , :destroy , :create] do
+    resources :hospitals , only: [:index , :show ] do
       resources :doctors , shallow: true , only: [:index , :show , :create , :destroy , :update ] do
         resources :appointments ,  only: [:index , :show , :create , :destroy , :update ]
       end
@@ -82,14 +85,14 @@ Rails.application.routes.draw do
 
   namespace :api , :defaults =>{:format => :json} do
     resources :doctors do
-      resources :ratings , shallow: true
+      resources :ratings , shallow: true , only: [:index , :show , :edit , :update , :destroy]
     end
   end
 
 
   namespace :api , :defaults =>{:format => :json} do
     resources :hospitals do
-      resources :ratings , shallow: true
+      resources :ratings , shallow: true , only: [:index , :show , :edit , :update , :destroy  ]
     end
   end
 
