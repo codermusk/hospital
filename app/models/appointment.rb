@@ -5,5 +5,5 @@ class Appointment < ApplicationRecord
   has_one :prescribtion
   validates :appointment_date , presence: true
   validates :time , presence: true
-
+  has_one :bill , through: :prescribtion
 end
