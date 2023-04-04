@@ -17,6 +17,10 @@ RSpec.describe Doctor , type: :model do
 
   context "email" do
     it "must be unique" do
+      doctor1 = create(:doctor , email: "doc@gmail.com")
+      doctor2= build(:doctor  , email: "doc@gmail.com")
+      doctor2.validate
+      expect(doctor2.errors).to include(:email)
 
     end
 
