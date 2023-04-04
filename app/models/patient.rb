@@ -4,7 +4,7 @@ class Patient < ApplicationRecord
   has_many :appointments
   has_one :account , :as =>  :accountable
   validates :name , presence:true
-  validates :age , presence:true
+  validates :age , presence:true , numericality: {greater_than: 0 , less_than: 99}
   validates :email , uniqueness: true
   accepts_nested_attributes_for :account
   has_many :ratings  , dependent: :destroy

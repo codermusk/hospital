@@ -4,5 +4,6 @@ FactoryBot.define do
     age {22}
     address {"Coimbatore West, Coimbatore  "}
     sequence (:email) {|n| "doctor#{n}@gmail.com"}
+    specialization{"cardiology"}
   end
 end

@@ -8,9 +8,10 @@ class Doctor < ApplicationRecord
   has_many :patients , through: :appointments
   validates :name , presence: true
   validates :email , presence:true , uniqueness: true
-  validates :address , presence:true
-  validates :age , presence:true
+  validates :address , presence:true , length: {minimum: 15}
+  validates :age , presence:true , numericality: {greater_than: 20}
   has_one :account  , :as => :accountable , dependent: :destroy
+  validates :specialization , presence: true
   accepts_nested_attributes_for :account
 
 end
