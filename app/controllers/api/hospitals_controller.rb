@@ -2,6 +2,15 @@ class Api::HospitalsController < Api::ApiController
 
   before_action :doorkeeper_authorize!
 
+  before_action :check , only: [:update , :destroy , :show , :showRatings]
+
+
+  def  check
+    @hospital = Hospital.find params[:id]
+  rescue
+    head :not_found
+  end
+
     def index
       if current_account&.accountable_type =='Doctor'
         redirect_to doctor_appointments_path(current_account.accountable_id)

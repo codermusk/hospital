@@ -1,6 +1,17 @@
 class Api::RatingsController < Api::ApiController
 
   before_action :doorkeeper_authorize!
+  before_action :check ,only: [:edit , :destroy , :show , :update]
+
+
+    def check
+
+        @rating = Rating.find params[:id]
+    rescue
+    head :unprocessable_entity
+
+    end
+
 
   def create
     if params[:ratable] == 'hospitals'
@@ -19,7 +30,7 @@ class Api::RatingsController < Api::ApiController
       if @rating.save
         render json: @rating, status: 200
       else
-        render json: { error: "un authorized" }, status: 422
+        head :unprocessable_entity
       end
 
     end
@@ -28,7 +39,7 @@ class Api::RatingsController < Api::ApiController
 
   def edit
 
-    @rating = Rating.find(params[:id])
+
     if current_account.accountable == @rating.patient
       render json: @rating, status: 200
     else
@@ -50,17 +61,17 @@ class Api::RatingsController < Api::ApiController
   end
 
   def show
-    @rating = Rating.find(params[:id])
+
     render json: @rating, status: 200
   end
 
   def destroy
-    @rating = Rating.find(params[:id])
+
     if @rating.patient_id == current_account.accountable_id
       if @rating.destroy
         render json: { success: "deleted Successfully" }, status: 200
       else
-        render json: { error: "un authorized method" }, status: 422
+        head :unprocessable_entity
       end
     else
       head :forbidden
@@ -69,7 +80,7 @@ class Api::RatingsController < Api::ApiController
 
   def update
 
-    @rating = Rating.find(params[:id])
+
 
     if current_account.accountable == @rating.patient
 

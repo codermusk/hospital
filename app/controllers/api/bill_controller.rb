@@ -1,6 +1,14 @@
 class Api::BillController < Api::ApiController
 
   before_action :doorkeeper_authorize!
+  before_action :check , only: [:update , :edit , :destroy , :show , :showPresc]
+
+
+  def check
+    @bill = Bill.find(params[:id])
+  rescue
+    head :not_found
+  end
   def create
     @prescribtion = Prescribtion.find(params[:id])
     @bill  = @prescribtion.build_bill bill_params

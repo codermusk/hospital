@@ -10,8 +10,6 @@ class Doctor < ApplicationRecord
   validates :email , presence:true , uniqueness: true
   validates :address , presence:true
   validates :age , presence:true
-  validates :dateofjoining , presence:true
-  validates :dateofjoining , presence:true
   has_one :account  , :as => :accountable , dependent: :destroy
   accepts_nested_attributes_for :account
 

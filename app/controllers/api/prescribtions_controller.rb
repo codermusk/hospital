@@ -1,6 +1,14 @@
 class Api::PrescribtionsController < Api::ApiController
 
   before_action :doorkeeper_authorize!
+  before_action :check ,only: [:edit , :update  , :destroy , :show]
+
+
+  def check
+    @prescribtion = Prescribtion.find(params[:id])
+  rescue
+    render json:{error:"id not found"} , status: 404
+  end
 
   def new
     @apponintment = Appointment.find(params[:appointment_id])

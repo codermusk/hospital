@@ -1,6 +1,11 @@
 class Api::AppointmentsController < Api::ApiController
   before_action :doorkeeper_authorize!
-
+  before_action :check , only: [:show , :edit , :destroy , :update]
+  def check
+    @appointment = Appointment.find params[:id]
+  rescue
+    head :not_found
+  end
 
   def book
     if current_account&.accountable_id==params[:id]
@@ -28,13 +33,13 @@ class Api::AppointmentsController < Api::ApiController
       # p @appointments
       render json:@appointments , status:200
     else
-      render json: {error:"not allowed method"} , status: :forbidden
+      render json: {error:"not allowed method"} , status: :unauthorized
     end
   end
 
   def update
     @appointment = Appointment.find(params[:id])
-  end
+
     if current_account&.accountable_type=="Doctor" && current_account.accountable_id==@appointment.doctor_id
 
     status = Hash.new
@@ -42,17 +47,22 @@ class Api::AppointmentsController < Api::ApiController
     if @appointment.update(status)
       render @appointment , status: 200
     else
-      render json: {error:@appointment.error} ,status: :forbidden
+      render json: {error:@appointment.error} ,status: :unprocessable_entity
     end
+    end
+    end
+
+  def show
+    render @appointment , status: 200
   end
-
-
 
   def destroy
     @appointment = Appointment.find(params[:id])
     if current_account&.accountable_id==@appointment.patient_id || current_account&.accountable_id==@appointment.doctor_id
       if @appointment.destroy
         head :success
+      else
+        head :unprocessable_entity
       end
 
     end

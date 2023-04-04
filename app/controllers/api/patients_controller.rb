@@ -2,6 +2,14 @@ class Api::PatientsController < Api::ApiController
 
   before_action :doorkeeper_authorize!
 
+  before_action :check , only: [:show , :edit  , :destroy , :update ]
+
+  def check
+    @patient = Patient.find(params[:id])
+  rescue
+    head :not_found
+  end
+
   def index
 
     @patients = Patient.all
