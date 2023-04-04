@@ -12,9 +12,9 @@ class Api::HospitalsController < Api::ApiController
   end
 
     def index
-      if current_account&.accountable_type =='Doctor'
-        redirect_to doctor_appointments_path(current_account.accountable_id)
-      end
+      # if current_account&.accountable_type =='Doctor'
+      #   redirect_to doctor_appointments_path(current_account.accountable_id)
+      # end
       @hospitals = Hospital.all
       render json: @hospitals , status: 200
     end

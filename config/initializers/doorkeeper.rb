@@ -18,16 +18,14 @@ Doorkeeper.configure do
   # adding oauth authorized applications. In other case it will return 403 Forbidden response
   # every time somebody will try to access the admin web interface.
   #
-  # admin_authenticator do
-  #   # Put your admin authentication logic here.
-  #   # Example implementation:
-  #
-  #   if current_user
-  #     head :forbidden unless current_user.admin?
-  #   else
-  #     redirect_to sign_in_url
-  #   end
-  # end
+  admin_authenticator do
+    # Put your admin authentication logic here.
+    # Example implementation:
+
+    unless current_account
+      redirect_to sign_in_url
+    end
+  end
 
   # You can use your own model classes if you need to extend (or even override) default
   # Doorkeeper models such as `Application`, `AccessToken` and `AccessGrant.
@@ -101,6 +99,8 @@ Doorkeeper.configure do
   # non-expiring access token (which is not recommended) then you need to return
   # Float::INFINITY from this block.
   skip_client_authentication_for_password_grant true
+  # add other flows to this array if you want more to be enabled, e.g., %w{authorization_code implicit password}
+
 
   # `context` has the following properties available:
   #
@@ -348,7 +348,7 @@ Doorkeeper.configure do
   #   https://datatracker.ietf.org/doc/html/rfc6819#section-4.4.2
   #   https://datatracker.ietf.org/doc/html/rfc6819#section-4.4.3
   #
-  grant_flows %w[password]
+  grant_flows %w[password client_credentials]
 
 
   # Allows to customize OAuth grant flows that +each+ application support.

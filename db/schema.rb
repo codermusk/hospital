@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_30_085000) do
+ActiveRecord::Schema.define(version: 2023_04_04_071843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,14 +68,6 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
 
-  create_table "articles", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "status"
-  end
-
   create_table "bills", force: :cascade do |t|
     t.integer "doctor_fees"
     t.boolean "status", default: false
@@ -83,16 +75,6 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "prescribtion_id"
     t.index ["prescribtion_id"], name: "index_bills_on_prescribtion_id"
-  end
-
-  create_table "comments", force: :cascade do |t|
-    t.string "commenter"
-    t.text "body"
-    t.bigint "article_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "status"
-    t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -122,6 +104,20 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "oauth_access_grants", force: :cascade do |t|
+    t.bigint "resource_owner_id", null: false
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
+    t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
+  end
+
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.bigint "resource_owner_id"
     t.bigint "application_id"
@@ -138,6 +134,18 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
   end
 
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "uid", null: false
+    t.string "secret", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", default: "", null: false
+    t.boolean "confidential", default: true, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "name"
     t.string "sex"
@@ -152,6 +160,7 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
   create_table "prescribtions", force: :cascade do |t|
     t.string "tablets"
     t.bigint "appointment_id"
+    t.integer "fees"
     t.string "comments"
     t.index ["appointment_id"], name: "index_prescribtions_on_appointment_id"
   end
@@ -166,6 +175,8 @@ ActiveRecord::Schema.define(version: 2023_03_30_085000) do
     t.index ["ratable_type", "ratable_id"], name: "index_ratings_on_ratable_type_and_ratable_id"
   end
 
-  add_foreign_key "comments", "articles"
+  add_foreign_key "oauth_access_grants", "accounts", column: "resource_owner_id"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "accounts", column: "resource_owner_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end

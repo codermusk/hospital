@@ -15,4 +15,11 @@ RSpec.describe Doctor , type: :model do
 
   end
 
+  context "email" do
+    it "must be unique" do
+
+    end
+
+  end
+
 end
