@@ -23,10 +23,12 @@ RSpec.describe Doctor , type: :model do
       expect(doctor2.errors).to include(:email)
 
     end
-    it "must has some value" do
+    it "must be present" do
       doctor = build(:doctor)
       expect(doctor.email).to be_truthy
     end
+
+
 
     it "must not be nil " do
       doctor = build(:doctor , email: nil)
@@ -106,6 +108,13 @@ RSpec.describe Doctor , type: :model do
     it 'should save mail as downcased' do
       doctor = build(:doctor)
       expect(doctor.email).not_to eql(doctor.email.upcase)
+    end
+
+    it 'should not be upcased' do
+      doctor = build(:doctor , email: 'DOC@GMAIL.COM')
+      doctor.save
+      expect(doctor.email).not_to eql(doctor.email.upcase)
+
     end
   end
 
