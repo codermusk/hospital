@@ -102,5 +102,12 @@ RSpec.describe Doctor , type: :model do
 
   end
 
+  context "callback" do
+    it 'should save mail as downcased' do
+      doctor = build(:doctor)
+      expect(doctor.email).not_to eql(doctor.email.upcase)
+    end
+  end
+
 
 end
