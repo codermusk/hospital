@@ -94,7 +94,11 @@ RSpec.describe Doctor , type: :model do
           expect(association).to be(:has_many)
 
       end
-    end
+      end
+      it 'rating' do
+        association = Doctor.reflect_on_association(:ratings).macro
+        expect(association).to be(:has_many)
+      end
 
   end
 

@@ -69,9 +69,14 @@ RSpec.describe Patient , type: :model do
 
   end
 
-  context "has many doc" do
-    it "association exists" do
+  context "association" do
+    it "has many doctors" do
       association = Patient.reflect_on_association(:doctors).macro
+      expect(association).to be(:has_many)
+    end
+
+    it 'has many ratings' do
+      association = Patient.reflect_on_association(:ratings).macro
       expect(association).to be(:has_many)
     end
 

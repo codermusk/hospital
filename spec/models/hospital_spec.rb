@@ -64,6 +64,12 @@ RSpec.describe Hospital , type: :model do
     end
 
   end
+  context "associations" do
+    it "has_many rating" do
+      association = Hospital.reflect_on_association(:ratings).macro
+      expect(association).to be(:has_many)
 
+    end
+  end
 
 end

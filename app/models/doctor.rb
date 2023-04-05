@@ -3,7 +3,7 @@ class Doctor < ApplicationRecord
     email.downcase!
   end
   has_many :appointments
-  has_many :ratings , as: :ratable
+  has_many :ratings , as: :ratable , dependent: :destroy
   has_and_belongs_to_many :hospitals ,join_table: :hospital_doctors
   has_many :patients , through: :appointments
   validates :name , presence: true
