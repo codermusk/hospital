@@ -11,19 +11,22 @@ class Api::PatientsController < Api::ApiController
   end
 
   def index
-
+    if current_account.accountable.is_a? AdminUser
     @patients = Patient.all
     render json: @patients, status: 200
+    else
+      head :unauthorized
+    end
   end
 
   def show
     @patient = Patient.find(params[:id])
-    if current_account.accountable == @patient
+    if current_account.accountable == @patient or current_account.accountable.is_a? AdminUser
       @patient = Patient.find(params[:id])
       render json: @patient, status: 200
 
     else
-      render json: { error: "User Does'nt have access to this " }, status: 422
+      head :unauthorized
     end
   end
 
@@ -39,22 +42,22 @@ class Api::PatientsController < Api::ApiController
 
   def edit
     @patient = Patient.find(params[:id])
-    if current_account.accountable == @patient
+    if current_account.accountable == @patient or current_account.accountable.is_a? AdminUser
       render json: @patient, status: 200
     else
-      render json: { error: "Method not allowed" }, status: 405
+      render json: { error: "Method not allowed" }, status: 401
     end
 
   end
 
   def update
     @patient = Patient.find(params[:id])
-    if current_account.accountable == @patient
+    if current_account.accountable == @patient || current_account.accountable.is_a?(AdminUser)
       if @patient.update patient_params
         render json: @patient, status: 200
-      else
-        render json: { error: "Not Modified " }, status: 304
-      end
+        end
+    else
+      head :unauthorized
     end
 
   end
@@ -62,10 +65,12 @@ class Api::PatientsController < Api::ApiController
   def destroy
 
     @patient = Patient.find(params[:id])
-    if current_account.accountable == @patient
+    if current_account.accountable == @patient or current_account.accountable.is_a? AdminUser
       if @patient.destroy
         render json: { success: "Deleted Successfully" }, status: 200
       end
+    else
+      head :unauthorized
     end
   end
 

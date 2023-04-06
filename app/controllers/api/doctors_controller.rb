@@ -36,16 +36,15 @@ class Api::DoctorsController < Api::ApiController
 
 
   def show
-
+    if current_account.accountable.is_a? Patient or current_account.accountable.is_a? AdminUser
     @doctor = Doctor.find params[:id]
-    if current_account.accountable.is_a? Doctor
+
       render json: @doctor , status:200
     else
-      head :forbidden
+      head :unauthorized
     end
 
-
-  end
+    end
 
   def create
     if current_account.accountable.is_a? AdminUser
@@ -57,7 +56,8 @@ class Api::DoctorsController < Api::ApiController
     end
     else
       head :unauthorized
-  end
+    end
+    end
 
 
   def destroy
@@ -69,14 +69,14 @@ class Api::DoctorsController < Api::ApiController
       render json: {error:"Method not allowed"} , status: 405
     end
     else
-      render head :unauthorized
+    head :unauthorized
     end
 
   end
 
   def update
     @doctor = Doctor.find(params[:id])
-    if current_account.accountable == @doctor
+    if current_account.accountable == @doctor or current_account.accountable.is_a? AdminUser
       if @doctor.update doctor_params
         render json: @doctor , status: 201
       else
@@ -87,6 +87,17 @@ class Api::DoctorsController < Api::ApiController
     end
   end
 
+  def  edit
+
+    @doctor = Doctor.find(params[:id])
+    if current_account.accountable.is_a?AdminUser or current_account.accountable==@doctor
+      render json: @doctor , status: 200
+    else
+      head :unauthorized
+    end
+
+  end
+
 
 
 
@@ -94,4 +105,5 @@ class Api::DoctorsController < Api::ApiController
   def doctor_params
     params.require(:doctor).permit(:name , :email , :address , :dateofjoining , :status , :specialization )
   end
-end
+
+  end

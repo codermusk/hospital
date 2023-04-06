@@ -140,6 +140,24 @@ RSpec.describe Api::HospitalsController  do
       expect(response).to have_http_status(201)
     end
 
+    it 'dont allow patient to update' do
+      hospital = create(:hospital)
+      put :update , params:{
+        id: hospital.id,
+        access_token: patient_token.token
+      }
+      expect(response).to have_http_status(401)
+    end
+
+    it 'dont allow doctor to update' do
+      hospital = create(:hospital)
+      put :update , params:{
+        id: hospital.id,
+        access_token: doctor_token.token
+      }
+      expect(response).to have_http_status(401)
+    end
+
   end
 
   describe "delete/hospital" do
@@ -166,6 +184,15 @@ RSpec.describe Api::HospitalsController  do
       delete :destroy , params:{
         id: hospital.id,
         access_token: patient_token.token
+      }
+      expect(response).to have_http_status 401
+    end
+
+    it 'wont allow to destroy by other' do
+      hospital = create :hospital
+      delete :destroy , params:{
+        id: hospital.id,
+        access_token: doctor_token.token
       }
       expect(response).to have_http_status 401
     end
