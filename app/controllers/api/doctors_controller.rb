@@ -38,7 +38,7 @@ class Api::DoctorsController < Api::ApiController
   def show
 
     @doctor = Doctor.find params[:id]
-    if current_account.accountable == @doctor
+    if current_account.accountable.is_a? Doctor
       render json: @doctor , status:200
     else
       head :forbidden
@@ -48,22 +48,30 @@ class Api::DoctorsController < Api::ApiController
   end
 
   def create
+    if current_account.accountable.is_a? AdminUser
     @doctor = Doctor.new doctor_params
     if @doctor.save
       render json: @doctor , status:200
     else
       render json: {error:"UnProcessable Entity"} , status: 425
     end
+    else
+      head :unauthorized
   end
 
 
   def destroy
+    if current_account.accountable.is_a? AdminUser
     @doctor = Doctor.find(params[:id])
     if @doctor.destroy
       render json: {success:"success"} , status: 201
     else
       render json: {error:"Method not allowed"} , status: 405
     end
+    else
+      render head :unauthorized
+    end
+
   end
 
   def update
@@ -75,7 +83,7 @@ class Api::DoctorsController < Api::ApiController
         render json: {error:"Method not allowed"} , status: 405
       end
     else
-      head :forbidden
+      head :unauthorized
     end
   end
 
