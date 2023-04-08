@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root "hospitals#index"
+
   post ":ratable/:ratable_id/ratings", to: "ratings#create"
   get  ":ratable/:ratable_id/ratings", to:"ratings#index"
   get  "api/doctors/:id/ratings" , to:"api/doctors#showRating"
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   get "api/bill/:id/prescribtion" , to:"api/bill#showPresc"
   post "api/:ratable/:ratable_id/ratings", to: "api/ratings#create"
   get  "api/:ratable/:ratable_id/ratings", to:"api/ratings#index"
+  get "api/bill" , to: "api/bill#index"
 
   resources :hospitals do
     resources :doctors, shallow: true do

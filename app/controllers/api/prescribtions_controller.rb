@@ -14,10 +14,18 @@ class Api::PrescribtionsController < Api::ApiController
     @apponintment = Appointment.find(params[:appointment_id])
     if current_account.accountable == @apponintment.doctor
       @prescribtion = Prescribtion.new
+      head :sucess
     end
 
   end
-
+  def index
+    if current_account.accountable.is_a? AdminUser
+      @prescribtions = Prescribtion.all
+      render @prescribtions
+    else
+      head :unauthorized
+    end
+  end
   def create
 
     @apponintment = Appointment.find(params[:appointment_id])
@@ -37,12 +45,12 @@ class Api::PrescribtionsController < Api::ApiController
 
   def edit
     @apponintment = Appointment.find(params[:appointment_id])
-    if current_account.accountable == @apponintment.doctor
+    if current_account.accountable == @apponintment.doctor || current_account.accountable.is_a?(AdminUser)
 
       @prescribtion = Prescribtion.find(params[:id])
       render json: { message: "ok" }, status: 200
     else
-      head :unprocessable_entity
+      head :unauthorized
     end
 
   end
@@ -50,26 +58,36 @@ class Api::PrescribtionsController < Api::ApiController
   def show
     @prescribtion = Prescribtion.find(params[:id])
     @patient = @prescribtion.appointment.patient
-    if current_account.accountable == @patient
+    if current_account.accountable == @patient || current_account.accountable.is_a?(AdminUser) || current_account.accountable==@prescribtion.appointment.doctor
 
-      render json: @prescribtion, status: 201
+      render json: @prescribtion, status: 200
     else
-      head :unprocessable_entity
+      head :unauthorized
     end
   end
 
   def update
 
     @prescribtion = Prescribtion.find(params[:id])
-    if current_account.accountable == @prescribtion.appointment.doctor
+    if current_account.accountable == @prescribtion.appointment.doctor || current_account.accountable.is_a?(AdminUser)
       if @prescribtion.update prescribtion_params
         render json: @prescribtion, status: 201
       else
-        render json: { error: "Un Authorized Entity" }, status: 401
+        render status:422
 
       end
     else
-      head :unprocessable_entity
+      head :unauthorized
+    end
+  end
+
+  def  destroy
+    if current_account.accountable.is_a?AdminUser
+      if @prescribtion.destroy
+        head 200
+      end
+    else
+      head :unauthorized
     end
   end
 

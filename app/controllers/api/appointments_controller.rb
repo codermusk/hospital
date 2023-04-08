@@ -1,6 +1,7 @@
 class Api::AppointmentsController < Api::ApiController
   before_action :doorkeeper_authorize!
   before_action :check , only: [:show , :edit , :destroy , :update]
+  # before_action :checkpat , only: [:index , :book]
   def check
     @appointment = Appointment.find params[:id]
   rescue
@@ -21,13 +22,17 @@ class Api::AppointmentsController < Api::ApiController
     end
   end
   def index
+    if current_account.accountable.is_a? AdminUser
+      @appointments = Appointment.all
+      render json: @appointments , status: 200
+    else
 
-    if  current_account&.accountable_type == "Doctor" && current_account.id==params[:id]
+    if  current_account&.accountable_type == "Doctor"
       @doctor = Doctor.find(current_account.accountable_id)
       @appointments = @doctor.appointments
       render json: @appointments , status: 200
 
-    elsif current_account&.accountable_id==params[:id]
+    elsif current_account&.accountable_id==params[:patient_id].to_i
       @patient = Patient.find(current_account.accountable_id)
       @appointments = @patient.appointments
       # p @appointments
@@ -35,35 +40,53 @@ class Api::AppointmentsController < Api::ApiController
     else
       render json: {error:"not allowed method"} , status: :unauthorized
     end
+    end
   end
 
   def update
     @appointment = Appointment.find(params[:id])
 
-    if current_account&.accountable_type=="Doctor" && current_account.accountable_id==@appointment.doctor_id
+    if current_account.accountable.is_a?AdminUser or current_account.accountable_id==@appointment.doctor_id or current_account.accountable_id==@appointment.patient_id
 
     status = Hash.new
     status['status'] =1
     if @appointment.update(status)
-      render @appointment , status: 200
+      render json: @appointment , status: 200
     else
       render json: {error:@appointment.error} ,status: :unprocessable_entity
     end
+    else
+      head :unauthorized
     end
+
     end
 
   def show
-    render @appointment , status: 200
+    if current_account.accountable.is_a?AdminUser or current_account.accountable_id==@appointment.doctor_id or current_account.accountable_id==@appointment.patient_id
+    render json:@appointment , status: 200
+    else
+      head :unauthorized
+      end
   end
 
+
+  def edit
+    if current_account.accountable.is_a?AdminUser or current_account.accountable_id==@appointment.doctor_id or current_account.accountable_id==@appointment.patient_id
+      render json:@appointment , status: 200
+    else
+      head :unauthorized
+    end
+  end
   def destroy
     @appointment = Appointment.find(params[:id])
-    if current_account&.accountable_id==@appointment.patient_id || current_account&.accountable_id==@appointment.doctor_id
+    if current_account&.accountable_id==@appointment.patient_id || current_account&.accountable_id==@appointment.doctor_id or current_account.accountable.is_a?(AdminUser)
       if @appointment.destroy
-        head :success
+        head 200
       else
         head :unprocessable_entity
       end
+    else
+      head :unauthorized
 
     end
   end

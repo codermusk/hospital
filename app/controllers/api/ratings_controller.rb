@@ -12,7 +12,6 @@ class Api::RatingsController < Api::ApiController
 
     end
 
-
   def create
     if params[:ratable] == 'hospitals'
       @hospital = Hospital.find(params[:ratable_id])
@@ -67,14 +66,14 @@ class Api::RatingsController < Api::ApiController
 
   def destroy
 
-    if @rating.patient_id == current_account.accountable_id
+    if @rating.patient_id == current_account.accountable_id || current_account.accountable.is_a?(AdminUser)
       if @rating.destroy
         render json: { success: "deleted Successfully" }, status: 200
       else
         head :unprocessable_entity
       end
     else
-      head :forbidden
+      head :unauthorized
     end
   end
 
@@ -82,7 +81,7 @@ class Api::RatingsController < Api::ApiController
 
 
 
-    if current_account.accountable == @rating.patient
+    if current_account.accountable == @rating.patient || current_account.accountable.is_a?(AdminUser)
 
       if @rating.update rating_params
         render json: @rating, status: 200
@@ -90,7 +89,7 @@ class Api::RatingsController < Api::ApiController
         render json: { error: "un authorized" }, status: 422
       end
     else
-      head :unprocessable_entity
+      head :unauthorized
     end
   end
 

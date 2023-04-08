@@ -9,6 +9,15 @@ class Api::BillController < Api::ApiController
   rescue
     head :not_found
   end
+
+  def index
+    if current_account.accountable.is_a?AdminUser
+      @bills = Bill.all
+      render json: @bills , status: 200
+    else
+      head :unauthorized
+    end
+  end
   def create
     @prescribtion = Prescribtion.find(params[:id])
     @bill  = @prescribtion.build_bill bill_params
@@ -28,34 +37,37 @@ class Api::BillController < Api::ApiController
   end
 
   def show
-    if current_account.accountable_id==Bill.find(params[:id]).prescribtion.appointment.patient_id
+    if current_account.accountable_id==@bill.prescribtion.appointment.patient_id || current_account.accountable.is_a?(AdminUser) || current_account.accountable==@bill.prescribtion.appointment.doctor
       @bill = Bill.find(params[:id])
       render json: @bill ,status: 200
     else
-      render json: {error:"Unproceeable entity"} , status: 422
+      head :unauthorized
     end
   end
 
 
   def destroy
-    @bill = Bill.find(params[:id])
+    if current_account.accountable.is_a?(AdminUser)
     if @bill.destroy
       render json: {success:"Deleted Successfully"} , status: 200
     else
       render json: {error:"Unproceeable entity"} , status: 422
     end
+    else
+      head :unauthorized
+      end
   end
 
   def update
     @bill = Bill.find(params[:id])
-    if current_account.accountable== @bill.prescribtion.appointment.doctor
+    if current_account.accountable.is_a?(AdminUser) || current_account.accountable==@bill.prescribtion.appointment.doctor
     if @bill.update bill_params
       render json: @bill , status: 200
     else
       render json: {error:"Unprocessable entity"} , status: 422
     end
     else
-      head :forbidden
+      head :unauthorized
     end
 
   end
