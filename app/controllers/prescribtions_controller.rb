@@ -8,10 +8,10 @@ class PrescribtionsController < ApplicationController
   end
 
   def create
+
     if current_account&.accountable.is_a? Doctor
       @apponintment = Appointment.find(params[:appointment_id])
       @prescribtion = @apponintment.create_prescribtion prescribtion_params
-      # p @prescribtion.errors
       @prescribtion.create_bill bill_params
 
       if @prescribtion.save

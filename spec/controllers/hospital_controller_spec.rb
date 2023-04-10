@@ -275,7 +275,8 @@ RSpec.describe Api::HospitalsController do
     end
 
     context "logged in as patient" do
-      before() do
+
+      before do
         hospital = create :hospital
         delete :destroy, params: {
           id: hospital.id,
@@ -313,25 +314,28 @@ RSpec.describe HospitalsController do
   let(:admin_user_token) { create(:doorkeeper_access_token, resource_owner_id: admin_user_account.id) }
   let(:patient_token) { create(:doorkeeper_access_token, resource_owner_id: patient_account.id) }
   let(:doctor_token) { create(:doorkeeper_access_token, resource_owner_id: doctor_account.id) }
+
   describe "Get/Hospitals" do
-    context "Index" do
+
       context "signed as patient" do
-        before() do
+        before do
           sign_in patient_account
           get :index
         end
         it "sends patient to hospital index page" do
           expect(response).to be_truthy
         end
-      end
+        end
+
 
       context "signed in as doctor" do
         it "redirect doctor to appointment path" do
           sign_in doctor_account
           get :index
-          expect(response).to redirect_to(doctor_appointments_path(doctor.id))
+          expect(response).to redirect_to(doctor_appointments_path(doctor_account.accountable_id))
         end
       end
+
       context "not logged in" do
         it "does not require authentication" do
           get :index
@@ -346,4 +350,4 @@ RSpec.describe HospitalsController do
       end
     end
   end
-end
+

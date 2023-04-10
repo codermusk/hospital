@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
     @appointment.doctor_id = params[:doctor_id]
     @doctor = Doctor.find(params[:doctor_id])
     if @appointment.save
-      redirect_to @doctor , notice: "Appointment Booked Successfully"
+      redirect_to patient_appointments_path(current_account.accountable_id) , notice: "Appointment Booked Successfully"
     end
     else
       redirect_to hospitals_path , notice: "Login to Book Appointment"

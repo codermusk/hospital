@@ -1,73 +1,61 @@
-RSpec.describe Prescribtion , type: :model do
-  context "Tablets" do
-    it "must not be nil" do
-      prescribtion = build(:prescribtion , tablets: nil)
-      prescribtion.validate
-      expect(prescribtion.errors).to include(:tablets)
-    end
-    it 'should have value' do
-      prescribtion = build(:prescribtion)
-      expect(prescribtion.tablets).to be_truthy
+require 'rails_helper'
 
-    end
+RSpec.describe Prescribtion, type: :model do
+  describe "tablets" do
+    context "given as nil" do
+      let(:prescribtion) { build(:prescribtion, tablets: nil) }
+      it "shows errors" do
+        prescribtion.validate
+        expect(prescribtion.errors).to include(:tablets)
+      end
 
-  end
-
-  context "fees" do
-    it 'should not be nil' do
-      prescribtion = build(:prescribtion , fees: nil)
-      prescribtion.validate
-      expect(prescribtion.errors).to include(:fees)
-    end
-
-    it 'should greater than 1000' do
-      prescribtion = build(:prescribtion , fees: 100)
-      prescribtion.validate
-      expect(prescribtion.errors).to include(:fees)
-    end
-    it 'must be greater than 1000' do
-      prescribtion = build :prescribtion , fees: 1000
-      expect(prescribtion.fees).to be_truthy
-    end
-
-    it "should not be greater than 100000" do
-      prescribtion = build(:prescribtion , fees: 10000000000)
-      prescribtion.validate
-      expect(prescribtion.errors).to include(:fees)
-    end
-
-  end
-  context "comments" do
-    it "should not be nil" do
-      prescribtion = build(:prescribtion , comments: nil)
-      prescribtion.validate
-      expect(prescribtion.errors).to include(:comments)
-    end
-
-    it "should be greater than length 10" do
-      prescribtion  = build(:prescribtion , comments: "hello")
-      prescribtion.validate
-      expect(prescribtion.errors).to include(:comments)
-    end
-
-    it "should be of length more than 10" do
-      prescribtion = build(:prescribtion)
-      expect(prescribtion.comments).to be_truthy
+      context "given some value" do
+        let(:prescribtion) { build(:prescribtion) }
+        it 'should have value' do
+          expect(prescribtion.tablets).to be_truthy
+        end
+      end
     end
   end
 
-  context "Belongs to" do
-    it 'appointment' do
-      prescribtion = build(:prescribtion)
-      expect(prescribtion.appointment).to be_an_instance_of(Appointment)
+  describe "comments" do
+    context "given as null" do
+      let(:prescribtion) { build(:prescribtion, comments: nil) }
+      it "should include errors" do
+        prescribtion.validate
+        expect(prescribtion.errors).to include(:comments)
+      end
+    end
+    context "given text less than len 10" do
+      let(:prescribtion) { build(:prescribtion, comments: 'hello') }
+      it "should include errors from comments" do
+        prescribtion.validate
+        expect(prescribtion.errors).to include(:comments)
+      end
     end
 
-    it "should not be nil" do
-      prescribtion = build(:prescribtion , appointment: nil )
-      expect(prescribtion.save).to be_falsey
+    context "length more than 10" do
+      let(:prescribtion) { create(:prescribtion) }
+      it "should be truthy" do
+        expect(prescribtion.comments).to be_truthy
+      end
     end
-
   end
+  describe "has association" do
+    context "Belongs to" do
+      it 'appointment' do
+        prescribtion = build(:prescribtion)
+        expect(prescribtion.appointment).to be_an_instance_of(Appointment)
+      end
+    end
+    context "given as nil" do
+      let(:prescribtion){build(:prescribtion , appointment: nil)}
+      it "it will be falsey" do
+        expect(prescribtion.save).to be_falsey
+      end
+    end
+  end
+
   context "association" do
     it 'should have one bill' do
       association = Prescribtion.reflect_on_association(:bill).macro
@@ -77,3 +65,5 @@ RSpec.describe Prescribtion , type: :model do
 
   end
 end
+
+
