@@ -1,7 +1,7 @@
 class DoctorsController < ApplicationController
+
   def index
     @doctors = Hospital.find(params[:hospital_id]).doctors
-
   end
 
 
@@ -12,18 +12,6 @@ class DoctorsController < ApplicationController
   def build
     @doctor = Hospital.doctors.build
   end
-
-
-  def create
-    @hospital  = Hospital.first!
-    @doctor = @hospital.doctors.create doctor_params
-    if @doctor.save
-    redirect_to hospital_path(@hospital)
-    end
-
-
-  end
-
   def edit
     @doctor = Doctor.find params[:id]
   end
