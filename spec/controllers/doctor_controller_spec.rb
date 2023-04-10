@@ -12,7 +12,7 @@ RSpec.describe Api::DoctorsController do
 
   describe "GET/hospitals/:hos_id/doctors" do
     context "when hospital id not given" do
-      it "throws an error" do
+      before do
         hospital = create(:hospital)
         doctor = build(:doctor)
         hospital.doctors << doctor
@@ -21,12 +21,14 @@ RSpec.describe Api::DoctorsController do
           access_token: admin_user_token.token,
           hospital_id: hospital.id
         }
+      end
+      it "throws an error" do
         expect(response).to have_http_status(200)
       end
     end
 
     context "when authentication is not given" do
-      it 'throws error as unauthenticated' do
+      before do
         hospital = create(:hospital)
         doctor = build(:doctor)
         hospital.doctors << doctor
@@ -35,6 +37,8 @@ RSpec.describe Api::DoctorsController do
 
           hospital_id: hospital.id
         }
+      end
+      it 'throws error as unauthenticated' do
         expect(response).to have_http_status(401)
       end
     end
@@ -43,30 +47,36 @@ RSpec.describe Api::DoctorsController do
 
   describe "showdoctor/Ratings" do
     context "if authentication is not provided" do
-      it "throws an error" do
+      before do
         doctor = create(:doctor)
         get :showRating, params: {
           id: doctor.id
         }
+      end
+      it "throws an error" do
         expect(response).to have_http_status(401)
       end
       context "if authentication is provides" do
-        it "shows lists of doc ratings" do
+        before do
           doctor = create(:doctor)
           get :showRating, params: {
             id: doctor.id,
             access_token: patient_token.token
           }
+        end
+        it "shows lists of doc ratings" do
           expect(response).to have_http_status(200)
         end
       end
 
       context "if valid doctor id is not given " do
-        it "will throw an error" do
+        before do
           get :showRating, params: {
             id: 0,
             access_token: patient_token.token
           }
+        end
+        it "will throw an error" do
           expect(response).to have_http_status(404)
         end
 
@@ -76,107 +86,122 @@ RSpec.describe Api::DoctorsController do
   end
   describe 'GET/:id/doctors' do
     context "Not authorized" do
-      it 'throws error as authorization required' do
+      before do
         doctor = create(:doctor)
         get :show, params: {
           id: doctor.id
 
         }
+      end
+      it 'throws error as authorization required' do
         expect(response).to have_http_status(401)
       end
     end
 
     context "when you give an non existing id" do
-      it 'throws no content message' do
+      before do
         get :show, params: {
           id: 0,
           access_token: patient_token.token
-
         }
+      end
+      it 'throws no content message' do
         expect(response).to have_http_status(404)
-
       end
     end
     context "when doctor id is given " do
-      it 'allows to show' do
+      before do
         doctor1 = create(:doctor)
         get :show, params: {
           id: doctor1.id,
           access_token: patient_token.token
         }
+      end
+      it 'allows to show' do
         expect(response).to have_http_status(200)
       end
     end
+
     context "when non related doc id is given " do
-      it 'dont allow' do
+      before do
         doctor1 = create(:doctor)
         get :show, params: {
           id: doctor1.id,
           # format: :json,
           access_token: doctor_token.token
         }
+      end
+      it 'dont allow' do
         expect(response).to have_http_status(401)
       end
     end
 
     context "edit" do
       context "when authentication in not provided" do
-        it "throws unauthorized message" do
+        before do
           doctor = create(:doctor)
           get :edit, params: {
             id: doctor.id
           }
+        end
+        it "throws unauthorized message" do
           expect(response).to have_http_status(401)
         end
 
       end
       context "when logged in as patient " do
-        it 'wont allow other user to edit' do
+        before do
           doctor = create(:doctor)
           get :edit, params: {
             id: doctor.id,
             access_token: patient_token.token
           }
+        end
+        it 'wont allow other user to edit' do
           expect(response).to have_http_status(401)
         end
       end
       context "when logged in as admin" do
-        it 'allows admin to edit' do
+        before do
           doctor = create(:doctor)
           get :edit, params: {
             id: doctor.id,
             access_token: admin_user_token.token
           }
+        end
+        it 'allows admin to edit' do
           expect(response).to have_http_status(200)
         end
       end
 
       context "when logged in as doctor who dont have relation" do
-        it 'wont allow other doctor to edit' do
+        before do
           doctor = create(:doctor)
           get :edit, params: {
             id: doctor.id,
             access_token: doctor_token.token
           }
+        end
+        it 'wont allow other doctor to edit' do
           expect(response).to have_http_status(401)
-
         end
       end
       context "when logged in as related doctor" do
-        it "allow current doc to edit" do
+        before do
           get :edit, params: {
             id: doctor.id,
             access_token: doctor_token.token
           }
+        end
+        it "allow current doc to edit" do
           expect(response).to have_http_status 200
         end
       end
-
     end
 
     context "update" do
       context "when authentication is not provided" do
-        it "shows unauthorized error message" do
+        before do
           doctor = create(:doctor)
           put :update, params: {
             id: doctor.id,
@@ -185,43 +210,54 @@ RSpec.describe Api::DoctorsController do
             }
 
           }
+        end
+        it "shows unauthorized error message" do
+
           expect(response).to have_http_status 401
 
         end
       end
 
       context "when logged in as patient" do
-        it "shows unauthorized error message" do
-          doctor = create(:doctor)
+        let(:doctor1){create(:doctor)}
+        before do
+
           put :update, params: {
-            id: doctor.id,
+            id: doctor1.id,
             doctor: {
               name: "bharath"
             },
             access_token: patient_token.token
           }
+        end
+        it "shows unauthorized error message" do
+
           expect(response).to have_http_status 401
         end
       end
       context "when logged in as admin" do
-        it 'allows admin to update' do
-          doctor = create(:doctor)
+        let(:doctor1){create(:doctor)}
+        before do
           put :update, params: {
-            id: doctor.id,
+            id: doctor1.id,
             doctor: {
               name: "bharath"
             },
             access_token: admin_user_token.token
           }
+        end
+        it 'allows admin to update' do
+
           expect(response).to have_http_status(201)
         end
       end
 
       context "when logged in as unrelated doctor" do
+        let(:doctor1){create(:doctor)}
         it 'shows unauthorized message' do
-          doctor = create(:doctor)
+
           put :update, params: {
-            id: doctor.id,
+            id: doctor1.id,
             doctor: {
               name: "bharath"
             },
@@ -264,68 +300,77 @@ RSpec.describe Api::DoctorsController do
       end
     end
   end
+
   describe "Delete/:id/Hospital" do
     context "when authentication is not given" do
+      let(:doctor1){create(:doctor)}
       it 'throws unauthorized error'do
-        doctor = create(:doctor)
+
         delete :destroy, params: {
-          id: doctor.id
+          id: doctor1.id
         }
         expect(response).to have_http_status 401
-
       end
     end
 
     context "when logged in as admin" do
-      it "shows success message" do
-        doctor = create(:doctor)
+      let(:doctor1){create(:doctor)}
+      before() do
         delete :destroy, params: {
-          id: doctor.id,
+          id: doctor1.id,
           access_token: admin_user_token.token
         }
+      end
+      it "shows success message" do
         expect(response).to have_http_status 201
-
       end
     end
-    context "when non existing id is given" do
 
-      it 'shows no content message' do
+    context "when non existing id is given" do
+      before() do
         delete :destroy, params: {
-          id: 0,
+          id: 144676,
           access_token: admin_user_token.token
         }
+      end
+      it 'shows no content message' do
         expect(response).to have_http_status 404
       end
     end
 
     context "when logged in as patient" do
-      it "throws unauthorized error" do
+      before do
         doctor = create(:doctor)
         delete :destroy, params: {
           id: doctor.id,
           access_token: patient_token.token
         }
+      end
+      it "throws unauthorized error" do
         expect(response).to have_http_status 401
       end
     end
 
     context "when logged in as non related doc" do
-      it "throws unauthorized error" do
+      before do
         doctor = create(:doctor)
         delete :destroy, params: {
           id: doctor.id,
           access_token: doctor_token.token
         }
+      end
+      it "throws unauthorized error" do
         expect(response).to have_http_status 401
       end
     end
     context "when logged in as related doctor" do
-      it "throws unauthorized error" do
-
+      before() do
         delete :destroy, params: {
           id: doctor.id,
           access_token: patient_token.token
         }
+      end
+      it "throws unauthorized error" do
         expect(response).to have_http_status 401
       end
     end
@@ -334,20 +379,25 @@ RSpec.describe Api::DoctorsController do
 
   describe "ShowHospitals" do
     context "when authentication is not provided" do
-      it "throws an error" do
+      before do
         get :showHospitals, params: {
           id: doctor.id
 
         }
+      end
+      it "throws an error" do
         expect(response).to have_http_status 401
       end
     end
+
     context "when authorization is provided" do
-      it "returns a success message" do
+      before do
         get :showHospitals, params: {
           id: doctor.id,
           access_token: admin_user_token.token
         }
+      end
+      it "returns a success message" do
         expect(response).to have_http_status 200
       end
     end
@@ -368,24 +418,26 @@ RSpec.describe DoctorsController do
 
   describe "get/doctors" do
     context "not signed in" do
-      it "lists the doctors in that hospital" do
+      before do
         hospital = create(:hospital)
         get :index, params: {
           hospital_id: hospital.id
         }
-
+      end
+      it "lists the doctors in that hospital" do
         expect(response).to be_truthy
-
       end
     end
     context "signed in as patient" do
-      it "lists the doctors in that hospital" do
+      before do
         sign_in patient_account
         hospital = create(:hospital)
         get :index, params: {
           hospital_id: hospital.id
         }
 
+      end
+      it "lists the doctors in that hospital" do
         expect(response).to be_truthy
 
       end
