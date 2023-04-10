@@ -36,6 +36,40 @@ RSpec.describe Api::DoctorsController do
     end
 
   end
+
+  describe "showdoctor/Ratings" do
+    context "if authentication is not provides" do
+      it "throws an error" do
+        doctor = create(:doctor)
+        get :showRating , params:{
+          id: doctor.id
+        }
+        expect(response).to have_http_status(401)
+      end
+      context "if authentication is provides" do
+        it "shows lists of doc ratings" do
+          doctor = create(:doctor)
+          get :showRating , params:{
+            id: doctor.id ,
+            access_token: patient_token.token
+          }
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context "if valid doctor id is not given " do
+        it "will throw an error" do
+          get :showRating , params:{
+            id:0 ,
+            access_token: patient_token.token
+          }
+          expect(response).to have_http_status(404)
+        end
+
+      end
+    end
+
+  end
   describe 'GET/:id/doctors' do
     it 'require authorization' do
       doctor = create(:doctor)
@@ -244,13 +278,34 @@ RSpec.describe Api::DoctorsController do
       }
       expect(response).to have_http_status 401
     end
-    it " wont allow current doctor to destroy" do
+    it "wont allow current doctor to destroy" do
 
       delete :destroy , params:{
         id: doctor.id ,
         access_token: patient_token.token
       }
       expect(response).to have_http_status 401
+    end
+  end
+
+  describe "ShowHospitals" do
+    context "when authentication is not provided" do
+      it "throws an error" do
+        get :showHospitals , params:{
+          id: doctor.id
+
+        }
+        expect(response).to have_http_status 401
+      end
+    end
+    context "when authorization is provided" do
+      it "returns a success message" do
+        get :showHospitals , params:{
+          id: doctor.id ,
+          access_token: admin_user_token.token
+        }
+        expect(response).to have_http_status 200
+      end
     end
   end
 

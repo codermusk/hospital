@@ -1,7 +1,7 @@
 class Api::DoctorsController < Api::ApiController
 
   before_action :doorkeeper_authorize!
-  before_action :check , only: [:show , :edit , :update , :destroy]
+  before_action :check , only: [:show , :edit , :update , :destroy , :showRating , :showHospitals]
 
   def check
     @doctor = Doctor.find params[:id]
