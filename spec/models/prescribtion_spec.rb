@@ -54,16 +54,15 @@ RSpec.describe Prescribtion, type: :model do
         expect(prescribtion.save).to be_falsey
       end
     end
-  end
-
-  context "association" do
-    it 'should have one bill' do
-      association = Prescribtion.reflect_on_association(:bill).macro
-      expect(association).to be(:has_one)
-
+    context "association" do
+      it 'should have one bill' do
+        association = Prescribtion.reflect_on_association(:bill).macro
+        expect(association).to be(:has_one)
+      end
     end
-
   end
+
+
 end
 
 
