@@ -2,12 +2,15 @@
 
 class Accounts::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  prepend_before_action :captcha_valid, :only => [:create]
 
   # GET /resource/sign_in
   # def new
   #   super
   # end
-
+  def create
+    super
+  end
   # POST /resource/sign_in
   # def create
   #   super
@@ -17,6 +20,16 @@ class Accounts::SessionsController < Devise::SessionsController
   # def destroy
   #   super
   # end
+  private
+
+  	def captcha_valid
+  		unless verify_recaptcha
+  			self.resource = resource_class.new(sign_in_params)
+  			clean_up_passwords resource
+  			flash.now[:alert] = "Fill the Recaptcha"
+  			render :new, status: :unprocessable_entity
+  		end
+  	end
 
   # protected
 
