@@ -29,18 +29,18 @@
           <%= link_to "Book Appointment" ,root_url , class: 'item' , style: 'font-size:25px; color:white' %>
           <%= link_to "My Appointments" , patient_appointments_path(current_account.accountable_id) , class:'item', style: 'font-size:25px; color:white' %>
         <div , style="padding-top: 20px">
-          <%= button_to "Log out " , destroy_account_session_path , method: :delete , class:'ui orange button', style: 'font-size:25px; color:white' %>
+          <%= button_to "Log out " , destroy_account_session_path , method: :delete , class:'ui inverted orange button', style: 'font-size:25px; color:white' %>
         </div>
 
         <%else %>
 
           <div , style="padding-top: 20px">
-            <%= button_to "Log out " , destroy_account_session_path , method: :delete , class:'ui orange button', style: 'font-size:25px; color:white' %>
+            <%= button_to "Log out " , destroy_account_session_path , method: :delete , class:'ui inverted orange button', style: 'font-size:25px; color:white' %>
           </div>
         <%end %>
         <% else %>
         <div style="padding-top: 29px; padding-right: 20px">
-          <%= button_to "Sign up" ,  new_account_registration_path  , method: :get,  class: 'ui white button' , style: 'font-size:15px; color:black ' %>
+          <%= button_to "Sign up/ Login" ,  new_account_registration_path  , method: :get,  class: 'ui white button' , style: 'font-size:15px; color:black ' %>
         </div>
 
 <% end %>
@@ -54,6 +54,9 @@
     </div>
     <%end %>
     <%= yield %>
+    <style>
+
+    </style>
     <script>
         document.querySelector('.message .close.icon')?.addEventListener('click', (ev)=> { ev.target.parentElement.style.display = "none";});
     </script>

@@ -1,4 +1,4 @@
-<div class="ui placeholder segment massive" style="padding: 90px">
+<div class="ui container massive" style="padding: 90px">
   <% if @doctors.count==0 %>
   <h2>
     No Doctors to show
@@ -7,18 +7,18 @@
 <%else %>
 
     <% @doctors.each do |doctor| %>
-     <div class="ui segment massive">
-       <div class="ui segments" style="display: flex;flex-direction: row;justify-content: space-between;align-items: center">
+     <div class="ui  raised segment">
+       <div class="ui  segments" style="display: flex;flex-direction: row;justify-content: space-between;align-items: center">
          <div style="width:20%">
            <div class="item ui label massive  " >
              <i class="doctor icon">
-              <h1>
-                <%= doctor.name %>
+              <h1 , style="font-family: 'Jost', sans-serif">
+                <%= doctor.name  %>
               </h1>
              </i>
            </div>
          </div>
-         <div style="padding: 0px 10px; width:20%;">
+         <div style="padding: 0px 10px; ">
            <strong style="font-size: 20px">
              Specialization:
              <%= doctor.specialization %>
@@ -27,7 +27,7 @@
        </div>
     <div style="display: flex; justify-content: space-between">
 
-      <div>
+      <div style="font-size: 20px">
         Patients Attended :
         <%= doctor.appointments.where(status: 1).count  %>
       </div>
@@ -39,7 +39,7 @@
 
     </div>
 
-       <div>
+       <div style="font-size: 20px">
          Mail :
          <%= doctor.email %>
        </div>

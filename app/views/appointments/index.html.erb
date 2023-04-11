@@ -10,7 +10,7 @@
 
     <div class="ui placeholder segment">
       <% @appointments.each do |appointment| %>
-      <div class="ui segment">
+      <div class="ui raised segment">
         <h1>
           Doctor :
           <%= appointment.doctor.name %>
@@ -26,15 +26,15 @@
         </h2>
 
         <% if appointment.status == 0%>
-          <a class="ui label">Pending</a>
+          <a class="ui label" style="font-size: 15px">Pending</a>
 
           <%= button_to "Delete Appointment" , appointment_path(appointment), method: :delete , data:{
             confirm: "Are you sure?"
           },class: 'ui  red button' %>
           <% elsif appointment.status ==2 %>
-          <a class="ui red label">Declined</a>
+          <a class="ui red label" style="font-size: 15px">Declined</a>
           <% else %>
-          <a class="ui teal label">Approved</a>
+          <a class="ui teal label" style="font-size: 15px">Approved</a>
           <%end %>
 
         <% if appointment.prescribtion&.bill %>
@@ -88,7 +88,7 @@
             Approved
           </div>
             <% if appointment.prescribtion %>
-              <%= link_to "Edit Prescription " , edit_prescribtion_path(appointment.prescribtion), class: "ui green button"%>
+              <%= link_to "Edit Prescription " , edit_prescribtion_path(appointment.prescribtion), class: "ui inverted green button" %>
             <%else %>
               <%= link_to "Prescription " , new_appointment_prescribtion_path(appointment) , class: "ui green button"%>
             <%end %>

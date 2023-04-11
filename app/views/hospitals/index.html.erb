@@ -3,11 +3,11 @@
 
   <div class="center aligned ui raised segment" style="padding:30px">
 
-    <h1>
+    <h1 style="color: darkorange">
       <%= hospital.name %>
     </h1>
 
-    <strong class="left aligned" style="font-size: 25px ; color: orange">
+    <strong class="left aligned" style="font-size: 25px ; color: salmon">
       Mail :
       <%= hospital.mail  %>
     </strong>
@@ -17,8 +17,8 @@
       <%= hospital.doctors.count %>
     </h2>
 <div class="ui right aligned ">
-  <%= link_to 'Ratings and Reviews' , hospital_ratings_path(hospital_id: hospital) , class:"ui yellow button" ,style: 'font-size:20px'%>
-  <%= link_to ' Show Doctors ‍👩🏻‍⚕️' , hospital_doctors_path(hospital_id: hospital) , class: "ui pink button" , style: 'font-size:20px' %>
+  <%= link_to 'Ratings and Reviews' , hospital_ratings_path(hospital_id: hospital) , class:"ui inverted yellow button" ,style: 'font-size:20px ; color:black'%>
+  <%= link_to ' Show Doctors ‍👩🏻‍⚕️' , hospital_doctors_path(hospital_id: hospital) , class: "ui inverted pink button" , style: 'font-size:20px; color:black' %>
 </div>
 
 
