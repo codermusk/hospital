@@ -1,0 +1,109 @@
+<div class="ui middle aligned container" style="height: 100%">
+
+   <% if @appointments.count == 0 %>
+    <div class="ui center aligned container" style="padding-top: 160px">
+      <h2>
+        No Appointments to Show
+      </h2>
+    </div>
+    <% elsif current_account.accountable_type=='Patient'%>
+
+    <div class="ui placeholder segment">
+      <% @appointments.each do |appointment| %>
+      <div class="ui raised segment">
+        <h1>
+          Doctor :
+          <%= appointment.doctor.name %>
+        </h1>
+       <h1>
+         Appointment Date :
+         <%= appointment.appointment_date.strftime("%d/%m/%Y") %>
+       </h1>
+
+        <h2>
+          Appointment Time
+          <%= appointment.time %>
+        </h2>
+
+        <% if appointment.status == 0%>
+          <a class="ui label" style="font-size: 15px">Pending</a>
+
+          <%= button_to "Delete Appointment" , appointment_path(appointment), method: :delete , data:{
+            confirm: "Are you sure?"
+          },class: 'ui  red button' %>
+          <% elsif appointment.status ==2 %>
+          <a class="ui red label" style="font-size: 15px">Declined</a>
+          <% else %>
+          <a class="ui teal label" style="font-size: 15px">Approved</a>
+          <%end %>
+
+        <% if appointment.prescribtion&.bill %>
+        <% if appointment.prescribtion.bill.status  %>
+
+     <%= link_to "Prescription" , prescribtion_path(appointment.prescribtion) ,  class:"ui green button" %>
+            <% else %>
+          <%= link_to "Pay Bill" , prescribtion_bill_path(appointment.prescribtion,appointment.prescribtion.bill) , method: :put , class: "ui green button" , data:{
+            confirm: "Pay the bill ?"
+          } %>
+
+        <%end %>
+
+
+
+          <% end %>
+      </div>
+      <% end %>
+    </div>
+    </div>
+    </div>
+      <%else %>
+    <div class="ui placeholder segment">
+      <% @appointments.each do |appointment| %>
+        <div class="ui segment">
+          <h1>
+            Patient Name :
+            <%= appointment.patient.name %>
+          </h1>
+          <h1>
+            Appointment Date :
+            <%= appointment.appointment_date.strftime("%d/%m/%Y") %>
+          </h1>
+
+          <h2>
+            Appointment Time
+            <%= appointment.time %>
+          </h2>
+          <% if appointment.status == 0  %>
+          <%= button_to "Confirm" , appointment_path(appointment) , method: :put , class: 'ui success green button' %>
+
+            <%= button_to "Decline" , decline_appointment_path(appointment), method: :put , data:{
+              confirm: "Are you sure?"
+            } , class: 'ui red button' %>
+            <% elsif appointment.status==2%>
+            <div class="ui red label">
+             Declined
+            </div>
+            <% else %>
+          <div class="ui teal label">
+            Approved
+          </div>
+            <% if appointment.prescribtion %>
+              <%= link_to "Edit Prescription " , edit_prescribtion_path(appointment.prescribtion), class: "ui inverted green button" %>
+            <%else %>
+              <%= link_to "Prescription " , new_appointment_prescribtion_path(appointment) , class: "ui green button"%>
+            <%end %>
+
+          <% end %>
+
+
+        </div>
+
+    <% end %>
+
+
+
+    <%end %>
+
+
+
+</div>
