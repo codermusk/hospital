@@ -31,6 +31,8 @@
           <%= button_to "Delete Appointment" , appointment_path(appointment), method: :delete , data:{
             confirm: "Are you sure?"
           },class: 'ui  red button' %>
+          <% elsif appointment.status ==2 %>
+          <a class="ui red label">Declined</a>
           <% else %>
           <a class="ui teal label">Approved</a>
           <%end %>
@@ -74,9 +76,13 @@
           <% if appointment.status == 0  %>
           <%= button_to "Confirm" , appointment_path(appointment) , method: :put , class: 'ui success green button' %>
 
-            <%= button_to "Remove" , appointment_path(appointment), method: :delete , data:{
+            <%= button_to "Decline" , decline_appointment_path(appointment), method: :put , data:{
               confirm: "Are you sure?"
             } , class: 'ui red button' %>
+            <% elsif appointment.status==2%>
+            <div class="ui red label">
+             Declined
+            </div>
             <% else %>
           <div class="ui teal label">
             Approved

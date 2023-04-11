@@ -15,38 +15,47 @@
   </head>
 
   <body>
-  <div class="ui stackable menu massive" style="background-color: #98DFD6">
-    <div class="item">
-      <%= image_tag("h.png") %>
+  <div class="ui stackable menu huge massive" style="background-color: #1C315E; height: 110px">
+    <div class="item" , style="padding-top: 10px">
+      <%= image_tag("h.png" , style: "height:110px;width:80px")%>
     </div>
-    <a class="item">About us</a>
-    <a class="item">Ratings and Our Partners</a>
-    <a class="item" >Testimonials</a>
+
 
     <div class = "right menu">
 
 <!--      <a class="item"> Edit Profile</a>-->
      <% if current_account %>
         <% if current_account.accountable_type=='Patient' %>
-          <%= link_to "Book Appointment" ,root_url , class: 'item' %>
-          <%= link_to "My Appointments" , patient_appointments_path(current_account.accountable_id) , class:'item' %>
-          <%= link_to "Log out " , destroy_account_session_path , method: :delete , class:'item' %>
+          <%= link_to "Book Appointment" ,root_url , class: 'item' , style: 'font-size:25px; color:white' %>
+          <%= link_to "My Appointments" , patient_appointments_path(current_account.accountable_id) , class:'item', style: 'font-size:25px; color:white' %>
+        <div , style="padding-top: 20px">
+          <%= button_to "Log out " , destroy_account_session_path , method: :delete , class:'ui orange button', style: 'font-size:25px; color:white' %>
+        </div>
 
         <%else %>
 
-          <%= link_to "Logout" , destroy_account_session_path , method: :delete, class:'item' %>
+          <div , style="padding-top: 20px">
+            <%= button_to "Log out " , destroy_account_session_path , method: :delete , class:'ui orange button', style: 'font-size:25px; color:white' %>
+          </div>
         <%end %>
         <% else %>
-<%= link_to "Sign up" ,  new_account_registration_path  , class: 'item' %>
+        <div style="padding-top: 29px; padding-right: 20px">
+          <%= button_to "Sign up" ,  new_account_registration_path  , method: :get,  class: 'ui white button' , style: 'font-size:15px; color:black ' %>
+        </div>
+
 <% end %>
 
         </div>
   </div>
 <% if notice %>
-    <div class="ui positive message" style="padding-left: 44% ">
+    <div class="ui positive notice message" style="width: max-content; margin: auto" >
+      <i class="close icon"></i>
       <%= notice  %>
     </div>
     <%end %>
     <%= yield %>
+    <script>
+        document.querySelector('.message .close.icon')?.addEventListener('click', (ev)=> { ev.target.parentElement.style.display = "none";});
+    </script>
   </body>
 </html>

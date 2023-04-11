@@ -1,13 +1,13 @@
-<div class="ui placeholder segment " style="padding: 100px">
+<div class="ui segment " style="padding-top: 90px ; padding-right: 300px ; padding-left: 300px">
   <% @hospitals.each do |hospital| %>
 
-  <div class="center aligned ui segment" style="padding:30px">
+  <div class="center aligned ui raised segment" style="padding:30px">
 
     <h1>
       <%= hospital.name %>
     </h1>
-<div style="padding-right: 1120px">
-    <strong class="left aligned" style="font-size: 25px">
+
+    <strong class="left aligned" style="font-size: 25px ; color: orange">
       Mail :
       <%= hospital.mail  %>
     </strong>
@@ -17,11 +17,15 @@
       <%= hospital.doctors.count %>
     </h2>
 <div class="ui right aligned ">
-  <%= link_to 'Ratings and Reviews' , hospital_ratings_path(hospital_id: hospital) , class:"btn btn-secondary" %>
+  <%= link_to 'Ratings and Reviews' , hospital_ratings_path(hospital_id: hospital) , class:"ui yellow button" ,style: 'font-size:20px'%>
+  <%= link_to ' Show Doctors ‍👩🏻‍⚕️' , hospital_doctors_path(hospital_id: hospital) , class: "ui pink button" , style: 'font-size:20px' %>
 </div>
+
+
+
+
   </div>
-    <div class="center aligned"></div>
-    <%= link_to ' Show Doctors ‍👩🏻‍⚕️' , hospital_doctors_path(hospital_id: hospital) , class: "btn btn-primary" %>
-  </div>
+    <br/>
+    <br/>
   <% end %>
 </div>

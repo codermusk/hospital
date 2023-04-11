@@ -98,5 +98,5 @@ Rails.application.routes.draw do
     end
   end
 
-
+  put ":id/appointment", to: "appointments#decline" , as: :decline_appointment
 end

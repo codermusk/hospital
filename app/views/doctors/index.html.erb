@@ -31,10 +31,11 @@
         Patients Attended :
         <%= doctor.appointments.where(status: 1).count  %>
       </div>
-      <div>
-        <%= link_to 'Book Appointment 💉' , doctor , class: "ui  teal  label massive" %>
+      <div style="display: flex">
+        <%= link_to 'Book Appointment 💉' , doctor , class: "ui orange button" , style: "font-size:15px"%> &ensp;
+        <%= link_to 'Ratings and Review' , "/doctors/#{doctor.id}/ratings"  , class: "ui pink button",style: "font-size:15px; width:max-content"%>
       </div>
-<%= link_to 'Ratings and Review' , "/doctors/#{doctor.id}/ratings"  , class: "btn btn-primary"%>
+
 
     </div>
 

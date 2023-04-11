@@ -11,6 +11,15 @@ class AppointmentsController < ApplicationController
       redirect_to hospitals_path , notice: "Login to Book Appointment"
     end
   end
+
+  def decline
+    @appointment = Appointment.find(params[:id])
+    status = Hash.new
+    status['status'] =2
+    if @appointment.update(status)
+      flash.now[:notice] = "Booking Declined"
+    end
+  end
   def index
 
     if  current_account && current_account.accountable_type == "Doctor"
@@ -28,7 +37,7 @@ class AppointmentsController < ApplicationController
     status = Hash.new
     status['status'] =1
      if @appointment.update(status)
-      redirect_to doctor_appointments_path(current_account.accountable_id)
+       flash.now[:notice] = "Booking Confirmed"
     end
   end
 
