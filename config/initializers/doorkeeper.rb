@@ -23,7 +23,7 @@ Doorkeeper.configure do
     # Example implementation:
 
     unless current_account
-      redirect_to sign_in_url
+      redirect_to new_account_session_path
     end
   end
 

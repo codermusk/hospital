@@ -52,8 +52,15 @@
       <i class="close icon"></i>
       <%= notice  %>
     </div>
-    <%end %>
-    <%= yield %>
+    <%end %><% if alert %>
+    <div class="ui negative notice message" style="width: max-content; margin: auto" >
+      <i class="close icon"></i>
+      <%= alert  %>
+    </div>
+  <%end %>
+
+
+  <%= yield %>
     <style>
 
     </style>
