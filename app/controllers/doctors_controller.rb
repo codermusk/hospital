@@ -1,11 +1,11 @@
 class DoctorsController < ApplicationController
 
   def index
-    @doctors = Hospital.find(params[:hospital_id]).doctors.includes(:ratings)
+    @doctors = Hospital.find(params[:hospital_id].to_i).doctors.includes(:ratings)
   end
 
   def search
-    @hospital = Hospital.find(params[:hospital_id])
+    @hospital = Hospital.find(params[:hospital_id].to_i)
     query = params["query"]
     if query.present?
       @doctors = Doctor.joins(:hospitals).where("hospitals.id = ? AND doctors.specialization ILIKE ?",params[:hospital_id].to_i,"%#{query}%").includes(:ratings)
@@ -19,7 +19,7 @@ class DoctorsController < ApplicationController
   end
 
   def show
-    @doctor = Doctor.find params[:id]
+    @doctor = Doctor.find params[:id].to_i
   end
 
   def build
@@ -27,7 +27,7 @@ class DoctorsController < ApplicationController
   end
 
   def edit
-    @doctor = Doctor.find params[:id]
+    @doctor = Doctor.find params[:id].to_i
   end
 
   private

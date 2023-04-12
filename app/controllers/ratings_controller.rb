@@ -1,4 +1,20 @@
 class RatingsController < ApplicationController
+  before_action :check , only: [:index]
+  def check
+    if params[:ratable] == 'hospitals'
+      begin
+      @hospital = Hospital.find params[:ratable_id].to_i
+      rescue
+      redirect_to hospitals_path , alert: "not allowed"
+      end
+    else
+      begin
+        @doctor = Doctor.find params[:ratable_id].to_i
+        rescue
+        redirect_to hospitals_path , alert: "not allowed"
+        end
+    end
+  end
   def index
     if params[:ratable] == 'hospitals'
       @hospital = Hospital.find params[:ratable_id]

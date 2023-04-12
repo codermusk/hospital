@@ -1,6 +1,6 @@
 class BillController < ApplicationController
   def update
-    @bill = Bill.find(params[:id])
+    @bill = Bill.find(params[:id].to_i)
     @prescribtion = Prescribtion.find(@bill.prescribtion.id)
     up = Hash.new
     up['status'] = true

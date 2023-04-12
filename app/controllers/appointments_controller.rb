@@ -2,7 +2,7 @@ class AppointmentsController < ApplicationController
   before_action :check , except: [:book , :index]
 
   def check
-    @appointment = Appointment.find(params[:id])
+    @appointment = Appointment.find(params[:id].to_i)
   rescue
     flash.now[:error] = "No Appointment found"
 
@@ -10,7 +10,7 @@ class AppointmentsController < ApplicationController
   def book
     if current_account
     @appointment = current_account.accountable.appointments.create appointment_params
-    @appointment.doctor_id = params[:doctor_id]
+    @appointment.doctor_id = params[:doctor_id].to_i
     @doctor = Doctor.find(params[:doctor_id])
     if @appointment.save
       redirect_to patient_appointments_path(current_account.accountable_id) , notice: "Appointment Booked Successfully"
@@ -21,7 +21,7 @@ class AppointmentsController < ApplicationController
   end
 
   def decline
-    @appointment = Appointment.find(params[:id])
+    @appointment = Appointment.find(params[:id].to_i)
     status = Hash.new
     status['status'] =2
     if @appointment.update(status)

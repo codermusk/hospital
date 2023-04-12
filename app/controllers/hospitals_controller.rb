@@ -7,7 +7,7 @@ class HospitalsController < ApplicationController
   end
 
   def show
-    @hospital = Hospital.find(params[:id])
+    @hospital = Hospital.find(params[:id].to_i)
   end
 
   def new
@@ -39,7 +39,7 @@ class HospitalsController < ApplicationController
   end
 
   def edit
-    @hospital = Hospital.find params[:id]
+    @hospital = Hospital.find params[:id].to_i
   end
 
   private
