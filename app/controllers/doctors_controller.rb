@@ -1,11 +1,23 @@
 class DoctorsController < ApplicationController
+  before_action :check , only: [:search , :index]
+  before_action :checkDoc , only: [:show]
+  def check
+    @hospital = Hospital.find(params[:hospital_id].to_i)
+  rescue
+    redirect_to hospitals_path , alert: "Not Allowed"
+  end
+
+  def checkDoc
+    @doctor = Doctor.find(params[:id].to_i)
+  rescue
+    redirect_to hospitals_path , alert: "Not Allowed"
+  end
 
   def index
-    @doctors = Hospital.find(params[:hospital_id].to_i).doctors.includes(:ratings)
+    @doctors = @hospital.doctors
   end
 
   def search
-    @hospital = Hospital.find(params[:hospital_id].to_i)
     query = params["query"]
     if query.present?
       @doctors = Doctor.joins(:hospitals).where("hospitals.id = ? AND doctors.specialization ILIKE ?",params[:hospital_id].to_i,"%#{query}%").includes(:ratings)
