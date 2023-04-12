@@ -67,3 +67,4 @@ gem "turbo-rails", "~> 1.4"
 gem 'kaminari'
 gem "figaro", "~> 1.2"
 
+

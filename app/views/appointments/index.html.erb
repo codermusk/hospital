@@ -1,57 +1,71 @@
 <div class="ui middle aligned container" style="height: 100%">
 
-   <% if current_account and @appointments.count == 0 %>
+  <% if current_account and @appointments.count == 0 %>
     <div class="ui center aligned container" style="padding-top: 160px">
       <h2>
         No Appointments to Show
       </h2>
     </div>
-    <% elsif current_account.accountable_type=='Patient'%>
+  <% elsif current_account.accountable_type == 'Patient' %>
 
     <div class="ui placeholder segment">
       <% @appointments.each do |appointment| %>
-      <div class="ui raised segment">
-        <h1>
-          Doctor :
-          <%= appointment.doctor.name %>
-        </h1>
-       <h1>
-         Appointment Date :
-         <%= appointment.appointment_date.strftime("%d/%m/%Y") %>
-       </h1>
+        <div class="ui basic modal" id="<%= "centerexample#{appointment.id}" %>" >
+          <div class="content" , style="font-size: 30px">
+            <p style="font-size: 20px">Confirm cancel</p>
+          </div>
+          <div class="middle aligned actions" , style="padding-right: 200px">
+           <button class="ui positive button">
+             No
+           </button>
+            <br>
+            <br>
+            <%= button_to "Yes", appointment_path(appointment), method: :delete,
+                          class: 'ui  red button' %>
+          </div>
+        </div>
+        <div class="ui raised segment">
 
-        <h2>
-          Appointment Time
-          <%= appointment.time %>
-        </h2>
+          <h1>
+            Doctor :
+            <%= appointment.doctor.name %>
+          </h1>
+          <h1>
+            Appointment Date :
+            <%= appointment.appointment_date.strftime("%d/%m/%Y") %>
+          </h1>
 
-        <% if appointment.status == 0%>
-          <a class="ui label" style="font-size: 15px">Pending</a>
+          <h2>
+            Appointment Time
+            <%= appointment.time %>
+          </h2>
 
-          <%= button_to "Delete Appointment" , appointment_path(appointment), method: :delete , data:{
-            confirm: "Are you sure?"
-          },class: 'ui  red button' %>
-          <% elsif appointment.status ==2 %>
-          <a class="ui red label" style="font-size: 15px">Declined</a>
+          <% if appointment.status == 0 %>
+            <a class="ui label" style="font-size: 15px">Pending</a>
+            <button onclick="$('<%= "#centerexample#{appointment.id}" %>').modal('show');" class="ui red button">
+             Cancel Appointment
+            </button>
+
+
+          <% elsif appointment.status == 2 %>
+            <a class="ui red label" style="font-size: 15px">Declined</a>
           <% else %>
-          <a class="ui teal label" style="font-size: 15px">Approved</a>
-          <%end %>
+            <a class="ui teal label" style="font-size: 15px">Approved</a>
+          <% end %>
 
-        <% if appointment.prescribtion&.bill %>
-        <% if appointment.prescribtion.bill.status  %>
+          <% if appointment.prescribtion&.bill %>
+            <% if appointment.prescribtion.bill.status %>
 
-     <%= link_to "Prescription" , prescribtion_path(appointment.prescribtion) ,  class:"ui green button" %>
+
+              <%= link_to "Prescription", prescribtion_path(appointment.prescribtion), class: "ui green button" %>
             <% else %>
-          <%= link_to "Pay Bill" , prescribtion_bill_path(appointment.prescribtion,appointment.prescribtion.bill) , method: :put , class: "ui green button" , data:{
-            confirm: "Pay the bill ?"
-          } %>
+              <%= link_to "Pay Bill", prescribtion_bill_path(appointment.prescribtion, appointment.prescribtion.bill), method: :put%>
 
-        <%end %>
-
+            <% end %>
 
 
           <% end %>
-      </div>
+        </div>
       <% end %>
       <div class="center aligned ui four wide column" , style="color: orange ; padding-left:36%">
         <%= paginate @appointments %>
@@ -59,7 +73,7 @@
     </div>
     </div>
     </div>
-      <%else %>
+  <% else %>
     <div class="ui placeholder segment">
       <% @appointments.each do |appointment| %>
         <div class="ui segment">
@@ -76,40 +90,40 @@
             Appointment Time
             <%= appointment.time %>
           </h2>
-          <% if appointment.status == 0  %>
-          <%= button_to "Confirm" , appointment_path(appointment) , method: :put , class: 'ui success green button' %>
+          <% if appointment.status == 0 %>
+            <%= button_to "Confirm", appointment_path(appointment), method: :put, class: 'ui success green button' %>
 
-            <%= button_to "Decline" , decline_appointment_path(appointment), method: :put , data:{
+            <%= button_to "Decline", decline_appointment_path(appointment), method: :put, data: {
               confirm: "Are you sure?"
-            } , class: 'ui red button' %>
-            <% elsif appointment.status==2%>
+            }, class: 'ui red button' %>
+          <% elsif appointment.status == 2 %>
             <div class="ui red label">
-             Declined
+              Declined
             </div>
-            <% else %>
-          <div class="ui teal label">
-            Approved
-          </div>
+          <% else %>
+            <div class="ui teal label">
+              Approved
+            </div>
             <% if appointment.prescribtion %>
-              <%= link_to "Edit Prescription " , edit_prescribtion_path(appointment.prescribtion), class: "ui inverted green button" %>
-            <%else %>
-              <%= link_to "Prescription " , new_appointment_prescribtion_path(appointment) , class: "ui green button"%>
-            <%end %>
+              <%= link_to "Edit Prescription ", edit_prescribtion_path(appointment.prescribtion), class: "ui inverted green button" %>
+            <% else %>
+              <%= link_to "Prescription ", new_appointment_prescribtion_path(appointment), class: "ui green button" %>
+            <% end %>
 
           <% end %>
 
 
         </div>
 
-    <% end %>
+      <% end %>
       <div class="center aligned ui four wide column" , style="color: orange ; padding-left:36%">
         <%= paginate @appointments %>
       </div>
 
 
+  <% end %>
 
-    <%end %>
+  </div>
 
 
 
-</div>
