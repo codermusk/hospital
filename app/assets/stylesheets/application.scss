@@ -22,3 +22,48 @@
 *{
   font-family: 'Quicksand', sans-serif;
 }
+.pagination a, .pagination span.current, .pagination span.gap {
+  float: left;
+  padding: 0 14px;
+  line-height: 38px;
+  text-decoration: none;
+  background-color: white;
+  border: 1px solid #DDD;
+  border-left-width: 0;
+  color: orange;
+}
+
+.pagination {
+  border-left: 1px solid #ddd;
+  color: orange!important;
+  .first{
+    padding : 0;
+    float: none;
+    border: none;
+    color: orange;
+  }
+  .prev {
+    padding : 0;
+    float: none;
+    border: none;
+    color: darkblue;
+  }
+  .page{
+    padding : 0;
+    float: none;
+    border: none;
+    color: darkblue;
+  }
+  .next{
+    padding : 0;
+    float: none;
+    border: none;
+    color: darkblue;
+  }
+  .last{
+    padding : 0;
+    float: none;
+    border: none;
+    color: darkblue;
+  }
+}

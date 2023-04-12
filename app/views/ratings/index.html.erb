@@ -1,68 +1,73 @@
 <div class="ui container" , style="padding: 20px">
-<div class="ui container">
-
-  <% if @ratings.count>0 %>
-<% @ratings.each do |r|%>
-<div class="ui  centered raised segment">
-  <div class="content">
-    <div class="header" style="font-size: 20px">
-      Name:
-      <%= r.ratable.name %>
-    </div>
-    <p class="extra content" style="font-size: 20px">
-      Reviews :
-      <%= r.review %>
-    </p>
-    <div class="card-text" style="font-size: 20px">
-      Ratings : <%= r.rating %> / 10
-    </div>
-    <div class="card-text "style="font-size: 20px">
-      Reviewed By: <%= r.patient.name %>
+  <div class="ui container">
+    <div class="ui center aligned container" style="font-family: 'Tamil MN'">
+      <h1>
+        Add a Review...!!!
+      </h1>
     </div>
 
-  </div>
-</div>
-      <hr>
+    <div class="ui container" , style="padding: 100px">
+      <div class="from-control">
 
-  <% end %>
-    <% else %>
-  <div class="ui center aligned container">
-    No Reviews To Show
-  </div>
-  <% end %>
+        <%= form_with url: "/#{params[:ratable]}/#{params[:ratable_id]}/ratings", scope: :rating, local: true, method: :post, class: "ui form" do |f| %>
+          <div class="row mb-3">
+            <br>
+            <div class="col-sm-10">
+              <%= f.number_field :rating, min: 1, max: 10, class: "form-control", placeholder: "Add Rating", style: "font-size:20px" %>
+            </div>
 
-  <hr>
-  <div class="ui center aligned container" style="font-family: 'Tamil MN'">
-    <h1 >
-      Add a Review...!!!
-    </h1>
-  </div>
+          </div>
+          <div class="row mb-3">
+            <br>
+            <div class="col-sm-10">
+              <%= f.text_area :review, class: "form-control", style: "font-size:2rem;width:100%; margin: 0; max-width: initial", placeholder: "Write Your Comments Here" %>
+            </div>
 
- <div class="ui container" , style="padding: 100px" >
-   <div class="from-control">
+          </div>
+          <br>
 
-     <%= form_with url: "/#{params[:ratable]}/#{params[:ratable_id]}/ratings", scope: :rating ,local: true, method: :post  , class: "ui form" do |f|%>
-    <div class="row mb-3">
-     <br>
-      <div class="col-sm-10" >
-        <%= f.number_field :rating ,min: 1, max: 10  , class:"form-control" , placeholder: "Add Rating" , style:"font-size:20px"%>
+          <%= f.submit class: "ui orange button" %>
+
+        <% end %>
+
       </div>
-
     </div>
-       <div class="row mb-3">
-<br>
-         <div class="col-sm-10" >
-           <%= f.text_area :review , class:"form-control" ,style:"font-size:2rem;width:100%; margin: 0; max-width: initial" , placeholder:"Write Your Comments Here"%>
-         </div>
+    <hr>
 
-       </div>
-       <br>
+    <% if @ratings.count > 0 %>
+      <% @ratings.each do |r| %>
+        <div class="ui  centered raised segment">
+          <div class="content">
+            <div class="header" style="font-size: 20px">
+              Name:
+              <%= r.ratable.name %>
+            </div>
+            <p class="extra content" style="font-size: 20px">
+              Reviews :
+              <%= r.review %>
+            </p>
+            <div class="card-text" style="font-size: 20px">
+              Ratings : <%= r.rating %> / 10
+            </div>
+            <div class="card-text " style="font-size: 20px">
+              Reviewed By: <%= r.patient.name %>
+            </div>
 
-       <%= f.submit  class:"ui orange button"  %>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+      <div class="center aligned ui four wide column" , style="color: orange ; padding-left:36%">
+        <%= paginate @ratings %>
+      </div>
+    <% else %>
+      <div class="ui center aligned container">
+        No Reviews To Show
+      </div>
+    <% end %>
 
-     <% end %>
 
-   </div>
- </div>
-</div>
+
+
+  </div>
 </div>
