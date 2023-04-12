@@ -1,0 +1,9 @@
+<% unless hospitals.empty? %>
+  <%= render hospitals %>
+<% else %>
+  <div class="ui center middle aligned container">
+    <div class="ui negative message">
+      No Hospitals Found !!
+    </div>
+  </div>
+<% end %>

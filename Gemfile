@@ -63,8 +63,6 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'activeadmin'
 gem 'doorkeeper'
-
-
-
-
+gem "turbo-rails", "~> 1.4"
+gem 'kaminari'
 gem "figaro", "~> 1.2"

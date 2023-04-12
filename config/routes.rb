@@ -20,7 +20,9 @@ Rails.application.routes.draw do
   get  "api/:ratable/:ratable_id/ratings", to:"api/ratings#index"
   get "api/bill" , to: "api/bill#index"
 
+
   resources :hospitals do
+    post "/search" , to: "hospitals#search" , as: :search , on: :collection
     resources :doctors, shallow: true do
       resources :ratings , shallow:true
     end

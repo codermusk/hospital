@@ -1,31 +1,18 @@
+
+
 <div class="ui segment " style="padding-top: 90px ; padding-right: 300px ; padding-left: 300px">
-  <% @hospitals.each do |hospital| %>
-
-  <div class="center aligned ui raised segment" style="padding:30px">
-
-    <h1 style="color: darkorange">
-      <%= hospital.name %>
-    </h1>
-
-    <strong class="left aligned" style="font-size: 25px ; color: darkblue">
-      Mail :
-      <%= hospital.mail  %>
-    </strong>
-
-    <h2 >
-      Number of Doctors
-      <%= hospital.doctors.count %>
-    </h2>
-<div class="ui right aligned ">
-  <%= link_to 'Ratings and Reviews' , hospital_ratings_path(hospital_id: hospital) , class:"ui inverted orange button" ,style: 'font-size:20px ; color:darkblue'%>
-  <%= link_to ' Show Doctors ‍👩🏻‍⚕️' , hospital_doctors_path(hospital_id: hospital) , class: "ui inverted orange button" , style: 'font-size:20px; color:darkblue' %>
-</div>
-
-
-
-
+  <div class="floating-fields">
+    <%= form_with url: search_hospitals_path, local: true, html: { class: "ui right aligned container search-form" } do |f| %>
+      <div class="ui massive action input">
+        <%= f.text_field :query, placeholder: "search Hospitals...", autocomplete: "off" %>
+        <button onclick="this.formAction.submit()" class="ui custom orange button">
+          <i class="search icon"></i>
+          Search
+        </button>
+      </div>
+    <% end %>
   </div>
-    <br/>
-    <br/>
-  <% end %>
+
+  <%= render "hospitals", hospitals: @hospitals %>
+
 </div>

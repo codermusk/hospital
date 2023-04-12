@@ -26,6 +26,7 @@
 <!--      <a class="item"> Edit Profile</a>-->
      <% if current_account %>
         <% if current_account.accountable_type=='Patient' %>
+
           <%= link_to "Book Appointment" ,root_url , class: 'item' , style: 'font-size:25px; color:white' %>
           <%= link_to "My Appointments" , patient_appointments_path(current_account.accountable_id) , class:'item', style: 'font-size:25px; color:white' %>
         <div , style="padding-top: 20px">
@@ -39,7 +40,9 @@
           </div>
         <%end %>
         <% else %>
-        <div style="padding-top: 29px; padding-right: 20px">
+        <%= link_to "Hospitals" , hospitals_path , class: 'item' , style: 'font-size:25px; color:white'%>
+        <div style="padding-top: 34px; padding-right: 20px">
+
           <%= button_to "Sign up/ Login" ,  new_account_registration_path  , method: :get,  class: 'ui white button' , style: 'font-size:15px; color:black ' %>
         </div>
 

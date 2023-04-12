@@ -1,0 +1,28 @@
+
+<% @hospitals.each do |hospital| %>
+
+  <div class="center aligned ui raised segment" style="padding:30px">
+
+    <h1 style="color: darkorange">
+      <%= hospital.name %>
+    </h1>
+
+    <strong class="left aligned" style="font-size: 25px ; color: darkblue">
+      Mail :
+      <%= hospital.mail %>
+    </strong>
+
+    <h2>
+      Number of Doctors
+      <%= hospital.doctors.count %>
+    </h2>
+    <div class="ui right aligned ">
+      <%= link_to 'Ratings and Reviews', hospital_ratings_path(hospital_id: hospital), class: "ui inverted orange button", style: 'font-size:20px ; color:darkblue' %>
+      <%= link_to ' Show Doctors ‍👩🏻‍⚕️', hospital_doctors_path(hospital_id: hospital), class: "ui inverted orange button", style: 'font-size:20px; color:darkblue' %>
+    </div>
+
+
+  </div>
+  <br/>
+  <br/>
+<% end %>
