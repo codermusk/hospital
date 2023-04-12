@@ -1,0 +1,3 @@
+<%= turbo_stream.update "Doctors" do %>
+  <%= render partial: 'doctors/doctors', locals: {doctors: @doctors } %>
+<% end %>

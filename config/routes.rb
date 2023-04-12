@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :hospitals do
     post "/search" , to: "hospitals#search" , as: :search , on: :collection
     resources :doctors, shallow: true do
+      post "/search"  , to: "doctors#search" , as: :search , on: :collection
       resources :ratings , shallow:true
     end
   end

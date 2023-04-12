@@ -1,4 +1,12 @@
 class AppointmentsController < ApplicationController
+  before_action :check , except: [:book , :index]
+
+  def check
+    @appointment = Appointment.find(params[:id])
+  rescue
+    flash.now[:error] = "No Appointment found"
+
+  end
   def book
     if current_account
     @appointment = current_account.accountable.appointments.create appointment_params
@@ -21,7 +29,6 @@ class AppointmentsController < ApplicationController
     end
   end
   def index
-
     if  current_account && current_account.accountable_type == "Doctor"
       @doctor = Doctor.find(current_account.accountable_id)
       @appointments = @doctor.appointments.includes(:prescribtion).includes(:patient).page params[:page]
@@ -33,7 +40,7 @@ class AppointmentsController < ApplicationController
   end
 
   def update
-    @appointment = Appointment.find(params[:id])
+
     status = Hash.new
     status['status'] =1
      if @appointment.update(status)
@@ -44,7 +51,6 @@ class AppointmentsController < ApplicationController
 
 
   def destroy
-    @appointment = Appointment.find(params[:id])
     @patient = @appointment.patient
     if @appointment.destroy
       if current_account.accountable_type=="Patient"

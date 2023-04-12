@@ -1,0 +1,14 @@
+<% if doctors %>
+  <div style="padding: 40px">
+    <div class="ui grid">
+  <%= render doctors %>
+    </div>
+  </div>
+
+<% else %>
+  <div class="ui center middle aligned container">
+    <div class="ui negative message">
+      No Hospitals Found !!
+    </div>
+  </div>
+<% end %>
