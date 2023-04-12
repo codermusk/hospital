@@ -2,7 +2,7 @@ class Api::HospitalsController < Api::ApiController
 
   before_action :doorkeeper_authorize!
 
-  before_action :check , only: [:update , :destroy , :show , :showRatings]
+  before_action :check , only: [:update , :destroy , :show , :showRatings , :edit]
 
 
   def  check
@@ -21,7 +21,6 @@ class Api::HospitalsController < Api::ApiController
 
 
   def  showRatings
-    @hospital  = Hospital.find(params[:id])
     if @hospital
     @ratings  = @hospital.ratings
     render json: @ratings , status:200
@@ -32,7 +31,6 @@ class Api::HospitalsController < Api::ApiController
 
   def edit
     if current_account.accountable.is_a? AdminUser
-      @hospital = Hospital.find params[:id]
       render json: @hospital , status: 200
     else
       head :unauthorized
@@ -71,7 +69,6 @@ class Api::HospitalsController < Api::ApiController
     end
     def  destroy
       if current_account.accountable.is_a?AdminUser
-      @hospital = Hospital.find(params[:id])
       if @hospital.destroy
         render json: {success:"Succefully deleted"}     , status: 201
       else

@@ -44,11 +44,8 @@ class Api::AppointmentsController < Api::ApiController
   end
 
   def update
-    @appointment = Appointment.find(params[:id])
-
     if current_account.accountable.is_a?AdminUser or current_account.accountable_id==@appointment.doctor_id or current_account.accountable_id==@appointment.patient_id
-
-    status = Hash.new
+      status = Hash.new
     status['status'] =1
     if @appointment.update(status)
       render json: @appointment , status: 200
@@ -78,7 +75,6 @@ class Api::AppointmentsController < Api::ApiController
     end
   end
   def destroy
-    @appointment = Appointment.find(params[:id])
     if current_account&.accountable_id==@appointment.patient_id || current_account&.accountable_id==@appointment.doctor_id or current_account.accountable.is_a?(AdminUser)
       if @appointment.destroy
         head 200

@@ -1,4 +1,5 @@
 class Rating < ApplicationRecord
+  paginates_per 5
   scope :get_ratings_hos,->{where ratable_type: 'Hospital'}
   scope :get_ratings_doc,->{where ratable_type: 'Doctor'}
   scope :get_all,->{order(rating: :desc)}

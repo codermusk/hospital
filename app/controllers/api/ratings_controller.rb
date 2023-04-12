@@ -5,8 +5,7 @@ class Api::RatingsController < Api::ApiController
 
 
     def check
-
-        @rating = Rating.find params[:id]
+      @rating = Rating.find params[:id]
     rescue
     head :unprocessable_entity
 
@@ -37,8 +36,6 @@ class Api::RatingsController < Api::ApiController
   end
 
   def edit
-
-
     if current_account.accountable == @rating.patient
       render json: @rating, status: 200
     else
@@ -60,12 +57,10 @@ class Api::RatingsController < Api::ApiController
   end
 
   def show
-
     render json: @rating, status: 200
   end
 
   def destroy
-
     if @rating.patient_id == current_account.accountable_id || current_account.accountable.is_a?(AdminUser)
       if @rating.destroy
         render json: { success: "deleted Successfully" }, status: 200
@@ -78,9 +73,6 @@ class Api::RatingsController < Api::ApiController
   end
 
   def update
-
-
-
     if current_account.accountable == @rating.patient || current_account.accountable.is_a?(AdminUser)
 
       if @rating.update rating_params
@@ -94,7 +86,6 @@ class Api::RatingsController < Api::ApiController
   end
 
   private
-
   def rating_params
     params.require(:rating).permit(:rating, :review)
   end

@@ -62,7 +62,6 @@ class Api::DoctorsController < Api::ApiController
 
   def destroy
     if current_account.accountable.is_a? AdminUser
-    @doctor = Doctor.find(params[:id])
     if @doctor.destroy
       render json: {success:"success"} , status: 201
     else
@@ -75,7 +74,6 @@ class Api::DoctorsController < Api::ApiController
   end
 
   def update
-    @doctor = Doctor.find(params[:id])
     if current_account.accountable == @doctor or current_account.accountable.is_a? AdminUser
       if @doctor.update doctor_params
         render json: @doctor , status: 201
@@ -88,8 +86,6 @@ class Api::DoctorsController < Api::ApiController
   end
 
   def  edit
-
-    @doctor = Doctor.find(params[:id])
     if current_account.accountable.is_a?AdminUser or current_account.accountable==@doctor
       render json: @doctor , status: 200
     else

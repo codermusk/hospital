@@ -20,7 +20,6 @@ class Api::PatientsController < Api::ApiController
   end
 
   def show
-    @patient = Patient.find(params[:id])
     if current_account.accountable == @patient or current_account.accountable.is_a? AdminUser
       @patient = Patient.find(params[:id])
       render json: @patient, status: 200
@@ -31,7 +30,6 @@ class Api::PatientsController < Api::ApiController
   end
 
   def create
-
     @patient = Patient.new patient_params
     if @patient.save
       render json: @patient, status: 200
@@ -41,7 +39,6 @@ class Api::PatientsController < Api::ApiController
   end
 
   def edit
-    @patient = Patient.find(params[:id])
     if current_account.accountable == @patient or current_account.accountable.is_a? AdminUser
       render json: @patient, status: 200
     else
@@ -51,7 +48,6 @@ class Api::PatientsController < Api::ApiController
   end
 
   def update
-    @patient = Patient.find(params[:id])
     if current_account.accountable == @patient || current_account.accountable.is_a?(AdminUser)
       if @patient.update patient_params
         render json: @patient, status: 200
@@ -63,8 +59,6 @@ class Api::PatientsController < Api::ApiController
   end
 
   def destroy
-
-    @patient = Patient.find(params[:id])
     if current_account.accountable == @patient or current_account.accountable.is_a? AdminUser
       if @patient.destroy
         render json: { success: "Deleted Successfully" }, status: 200

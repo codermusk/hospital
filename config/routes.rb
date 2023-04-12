@@ -55,7 +55,10 @@ Rails.application.routes.draw do
 
 
   resources :hospitals do
-    resources :ratings , shallow: true
+    resources :ratings , shallow: true do
+      get '/page/:page', action: :index, on: :collection
+    end
+
   end
 
 

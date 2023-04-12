@@ -29,6 +29,8 @@ class HospitalsController < ApplicationController
     query = params["query"]
     if query.present?
       @hospitals = Hospital.where('name ILIKE ?', "%#{Hospital.sanitize_sql_like(query)}%")
+    else
+      @hospitals = Hospital.all
     end
     respond_to do |format|
       format.turbo_stream

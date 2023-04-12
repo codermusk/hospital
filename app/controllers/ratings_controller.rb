@@ -2,11 +2,10 @@ class RatingsController < ApplicationController
   def index
     if params[:ratable] == 'hospitals'
       @hospital = Hospital.find params[:ratable_id]
-      @ratings = @hospital.ratings
+      @ratings = @hospital.ratings.order(:rating).page params[:page]
     else
       @doctor = Doctor.find params[:ratable_id]
-      @ratings = @doctor.ratings
-
+      @ratings = @doctor.ratings.order(:rating).page params[:page]
     end
   end
 

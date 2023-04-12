@@ -27,7 +27,6 @@ class Api::PrescribtionsController < Api::ApiController
     end
   end
   def create
-
     @apponintment = Appointment.find(params[:appointment_id])
     if current_account.accountable == @apponintment.doctor
       @prescribtion = @apponintment.create_prescribtion prescribtion_params
@@ -67,8 +66,6 @@ class Api::PrescribtionsController < Api::ApiController
   end
 
   def update
-
-    @prescribtion = Prescribtion.find(params[:id])
     if current_account.accountable == @prescribtion.appointment.doctor || current_account.accountable.is_a?(AdminUser)
       if @prescribtion.update prescribtion_params
         render json: @prescribtion, status: 201
