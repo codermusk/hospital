@@ -24,11 +24,11 @@ class AppointmentsController < ApplicationController
 
     if  current_account && current_account.accountable_type == "Doctor"
       @doctor = Doctor.find(current_account.accountable_id)
-      @appointments = @doctor.appointments
+      @appointments = @doctor.appointments.includes(:prescribtion).includes(:patient).page params[:page]
 
     elsif current_account
     @patient = Patient.find(current_account.accountable_id)
-    @appointments = @patient.appointments
+    @appointments = @patient.appointments.includes(:doctor).includes(:prescribtion).page params[:page]
     end
   end
 

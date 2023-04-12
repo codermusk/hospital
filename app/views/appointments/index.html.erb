@@ -1,6 +1,6 @@
 <div class="ui middle aligned container" style="height: 100%">
 
-   <% if @appointments.count == 0 %>
+   <% if current_account and @appointments.count == 0 %>
     <div class="ui center aligned container" style="padding-top: 160px">
       <h2>
         No Appointments to Show
@@ -53,6 +53,9 @@
           <% end %>
       </div>
       <% end %>
+      <div class="center aligned ui four wide column" , style="color: orange ; padding-left:36%">
+        <%= paginate @appointments %>
+      </div>
     </div>
     </div>
     </div>
@@ -99,6 +102,9 @@
         </div>
 
     <% end %>
+      <div class="center aligned ui four wide column" , style="color: orange ; padding-left:36%">
+        <%= paginate @appointments %>
+      </div>
 
 
 

@@ -2,6 +2,7 @@ class Doctor < ApplicationRecord
   before_commit do
     email.downcase!
   end
+  paginates_per 6
   has_many :appointments
   has_many :ratings , as: :ratable , dependent: :destroy
   has_and_belongs_to_many :hospitals ,join_table: :hospital_doctors
