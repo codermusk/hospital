@@ -2,7 +2,7 @@
   <div class="ui placeholder segment">
 
 
-    <%= form_with model: @prescribtion, class: "ui form", html: { style: "font-size:2rem !important;" } do |f| %>
+    <%= form_with model: @prescribtion, class: "ui form", local: true ,html: { style: "font-size:2rem !important;" } do |f| %>
       <div>
         <%= f.label :comments %>
         <div class="ui input" style="width: 100%">

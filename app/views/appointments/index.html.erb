@@ -59,7 +59,7 @@
 
               <%= link_to "Prescription", prescribtion_path(appointment.prescribtion), class: "ui green button" %>
             <% else %>
-              <%= link_to "Pay Bill", prescribtion_bill_path(appointment.prescribtion, appointment.prescribtion.bill), method: :put%>
+              <%= link_to "Pay Bill", prescribtion_bill_path(appointment.prescribtion, appointment.prescribtion.bill),local:true , method: :put , class: "ui green button"%>
 
             <% end %>
 
@@ -91,9 +91,9 @@
             <%= appointment.time %>
           </h2>
           <% if appointment.status == 0 %>
-            <%= button_to "Confirm", appointment_path(appointment), method: :put, class: 'ui success green button' %>
+            <%= button_to "Confirm", appointment_path(appointment), local:true ,method: :put, class: 'ui success green button' %>
 
-            <%= button_to "Decline", decline_appointment_path(appointment), method: :put, data: {
+            <%= button_to "Decline", decline_appointment_path(appointment), local:true , method: :put, data: {
               confirm: "Are you sure?"
             }, class: 'ui red button' %>
           <% elsif appointment.status == 2 %>

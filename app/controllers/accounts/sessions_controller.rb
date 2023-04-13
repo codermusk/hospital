@@ -26,8 +26,7 @@ class Accounts::SessionsController < Devise::SessionsController
   		unless verify_recaptcha
   			self.resource = resource_class.new(sign_in_params)
   			clean_up_passwords resource
-  			flash.now[:alert] = "Fill the Recaptcha
-"
+  			flash.now[:alert] = "Fill the Recaptcha"
   			render :new, status: :unprocessable_entity
   		end
   	end

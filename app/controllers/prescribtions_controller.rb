@@ -22,14 +22,15 @@ class PrescribtionsController < ApplicationController
 
     if current_account&.accountable.is_a? Doctor
       @apponintment = Appointment.find(params[:appointment_id].to_i)
-      @prescribtion = @apponintment.create_prescribtion prescribtion_params
-      @prescribtion.create_bill bill_params
-
-      if @prescribtion.save
+      @prescribtion = @apponintment.build_prescribtion prescribtion_params
+      @prescribtion.build_bill bill_params
+      if @prescribtion.save && @prescribtion.bill.save
         redirect_to doctor_appointments_path(current_account.accountable_id), notice: "prescribed SuccessFully"
+      else
+        render :new , alert: "Fill the fields correctly"
       end
     else
-      render :new, flash.now[:alert] = "un authorized"
+      render :new, alert:"un authorized" , status: 401
     end
   end
 

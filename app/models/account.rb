@@ -12,6 +12,7 @@ class Account < ApplicationRecord
   before_commit do
     email.downcase!
   end
+  validates :email , presence: true , uniqueness: true
   has_many :access_tokens,
            class_name: 'Doorkeeper::AccessToken',
            foreign_key: :resource_owner_id,

@@ -10,16 +10,16 @@
     <%= @doctor.specialization %>
   </p>
 <div class="center aligned ui container">
-  <%= form_with url: book_appointment_path(@doctor) , scope: Appointment, method: :post do |form| %>
+  <%= form_with url: book_appointment_path(@doctor) ,local: true ,scope: Appointment, method: :post do |form| %>
 <%= form.label :appointment_date , "Appointment date" , style:'font-size:17px' %>
-  <%= form.date_field :appointment_date , min: Date.tomorrow , max: Date.today+15 %>
+  <%= form.date_field :appointment_date , min: Date.tomorrow , max: Date.today+15 , :required=> true%>
     <% aptime = [['10 AM' , '10 AM'],['11 AM' , '11 AM'],['12 PM' , '12 PM'],['1 PM' , '1 PM'],['2 PM' , '2 PM'],['3 PM' , '3 PM'],['4 PM' , '4 PM'],['5 PM' , '5 PM']] %>
-    <%= form.select :time , aptime %>
+    <%= form.select :time , aptime ,:required=> true%>
     <br>
     <br>
 
 
-    <%= form.submit "Book Appointment 🚑", class: 'ui orange button' , data:{confirm: 'Are you Sure' }  %>
+    <%= form.submit "Book Appointment 🚑", class: 'ui orange button'  %>
 
 
   <% end %>

@@ -1,11 +1,14 @@
-<div class="ui placeholder segment" , style="padding: 140px">
-  <%= form_with url: appointment_prescribtions_path(params[:appointment_id]), class: "ui form" , method: :post  , scope:  :prescribtion do |f|  %>
+<div style="padding: 100px">
+
+
+<div class="ui placeholder segment" , style="padding: 120px ; padding-left: 100px">
+  <%= form_with url: appointment_prescribtions_path(params[:appointment_id]), class: "ui form" , method: :post  , local: true , scope:  :prescribtion do |f|  %>
 
     <%= fields_for :bill_attributes do|field| %>
       <div class="row mb-3">
-        <%= field.label :doctor_fees , class:"col-sm-8 col-form-label" %>
+        <%= field.label :doctor_fees , class:"col-sm-8 col-form-label" , style:"font-size:20px" %>
         <div class="col-sm-5" >
-          <%= field.number_field :doctor_fees ,class:"form-control" %>
+          <%= field.number_field :doctor_fees ,class:"form-control" ,:required => true , min: 1000 %>
         </div>
 
       </div>
@@ -14,16 +17,16 @@
     <% end %>
     <br>
     <div class="row mb-3">
-      <%= f.label :tablets ,class:"col-sm-8 col-form-label" %>
+      <%= f.label :tablets ,class:"col-sm-8 col-form-label", style:"font-size:20px" %>
       <div class="col-sm-10" >
-        <%= f.text_area :tablets, class:"form-control",style:"font-size:2rem;width:55%; margin: 0; max-width: initial" %>
+        <%= f.text_area :tablets, class:"form-control",style:"font-size:2rem;width:55%; margin: 0; max-width: initial", :required => true , :as => :text , :minlength=>10%>
       </div>
 
     </div>
     <div class="row mb-3">
-      <%= f.label :comments ,class:"col-sm-8 col-form-label" %>
+      <%= f.label :comments ,class:"col-sm-8 col-form-label", style:"font-size:20px" %>
       <div class="col-sm-10" >
-        <%= f.text_area :comments, class:"form-control",style:"font-size:2rem;width:55%; margin: 0; max-width: initial" %>
+        <%= f.text_area :comments, class:"form-control",style:"font-size:2rem;width:55%; margin: 0; max-width: initial",:required => true ,:as => :text , :minlength=>10%>
       </div>
 
     </div>
@@ -31,9 +34,10 @@
 
  <hr>
 
-    <%= f.submit %>
+    <%= f.submit style:"color:orange;font-size:20px" %>
 
 
 
   <% end %>
+</div>
 </div>

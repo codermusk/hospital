@@ -1,6 +1,6 @@
 ActiveAdmin.register Patient do
 
-  permit_params :name , :sex , :address , :email , :mobil_number , :age ,account_attributes: [:email , :password , :password_confirmation]
+  permit_params :name , :sex , :address , :mobil_number , :age ,account_attributes: [:email , :password , :password_confirmation]
   form do |f|
     f.semantic_errors
     f.inputs
@@ -13,7 +13,7 @@ ActiveAdmin.register Patient do
     end
     f.actions
   end
-  filter :email
+
   filter :name
   filter :mobil_number
   filter :sex

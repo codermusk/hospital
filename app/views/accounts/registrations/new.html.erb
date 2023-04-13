@@ -1,13 +1,13 @@
 <div class="ui container" style="padding: 5%">
   <div class="ui  placeholder segment" style="padding: 160px">
-
+    <%render "accounts/shared/error_messages", resource: resource %>
     <h2 class="ui text" >Sign Up</h2>
     <br>
 
 
     <%= form_for(resource, as: resource_name, class:"ui form", url: registration_path(resource_name)) do |f| %>
 
-      <%= render "accounts/shared/error_messages", resource: resource %>
+
 
       <%= fields_for :patient do |form| %>
 
@@ -40,7 +40,7 @@
         <div class="row mb-3 ">
 
           <div class="col-sm-10">
-            <%= form.telephone_field :mobile_number , class:"form-control" ,:required => true , placeholder: "Mobile Number"%>
+            <%= form.telephone_field :mobile_number , class:"form-control" ,:required => true , placeholder: "Mobile Number", :as => :text , :minlength=>10 , :maxlength=>10 %>
           </div>
         </div>
       <% end %>

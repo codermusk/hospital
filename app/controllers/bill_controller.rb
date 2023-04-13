@@ -5,7 +5,7 @@ class BillController < ApplicationController
     up = Hash.new
     up['status'] = true
     if @bill.update up
-      redirect_to  appointments_path(current_account.accountable_id), status: "Bill paid"
+      redirect_to  appointments_path(current_account.accountable_id), notice:  "Bill paid"
     end
   end
 end
