@@ -2,11 +2,17 @@ class Api::DoctorsController < Api::ApiController
 
   before_action :doorkeeper_authorize!
   before_action :check , only: [:show , :edit , :update , :destroy , :showRating , :showHospitals]
+  before_action :checkhos , only: [:index]
 
   def check
     @doctor = Doctor.find params[:id]
   rescue
     head :not_found
+  end
+  def checkhos
+    @hospital = Hospital.find params[:hospital_id]
+  rescue
+    render json: {errors: "not found"} , status: 404
   end
   def index
     @doctors = Hospital.find(params[:hospital_id]).doctors
