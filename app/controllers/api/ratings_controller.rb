@@ -7,7 +7,7 @@ class Api::RatingsController < Api::ApiController
     def check
       @rating = Rating.find params[:id]
     rescue
-    head :unprocessable_entity
+      render json: {message:"not found"} , status: 404
 
     end
 

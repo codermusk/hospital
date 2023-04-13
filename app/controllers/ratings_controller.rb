@@ -41,11 +41,11 @@ class RatingsController < ApplicationController
         if @rating.save
           redirect_to "/doctors/#{params[:ratable_id]}/ratings", notice: "rating successfully created"
         else
-          redirect_to root_path , notice: "Not Allowed"
+          render :new , notice: "Try again"
         end
         end
       else
-        redirect_to hospitals_path , notice: "Login to Give a Rating"
+        redirect_to hospitals_path , alert: "Login to Give a Rating"
       end
 
 

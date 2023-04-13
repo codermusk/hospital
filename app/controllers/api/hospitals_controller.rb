@@ -8,7 +8,7 @@ class Api::HospitalsController < Api::ApiController
   def  check
     @hospital = Hospital.find params[:id]
   rescue
-    head :not_found
+    render json: {message:"not found"} , status: 404
   end
 
     def index
@@ -21,12 +21,9 @@ class Api::HospitalsController < Api::ApiController
 
 
   def  showRatings
-    if @hospital
     @ratings  = @hospital.ratings
     render json: @ratings , status:200
-    else
-      render json:{error:"Not Found"} , status:422
-      end
+
   end
 
   def edit

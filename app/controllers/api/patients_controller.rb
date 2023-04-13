@@ -7,7 +7,7 @@ class Api::PatientsController < Api::ApiController
   def check
     @patient = Patient.find(params[:id])
   rescue
-    head :not_found
+    render json: {message:"not found"} , status: 404
   end
 
   def index

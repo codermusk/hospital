@@ -6,7 +6,7 @@
         No Appointments to Show
       </h2>
     </div>
-  <% elsif current_account.accountable_type == 'Patient' %>
+  <% elsif current_account&.accountable_type == 'Patient' %>
 
     <div class="ui placeholder segment">
       <% @appointments.each do |appointment| %>
@@ -73,7 +73,7 @@
     </div>
     </div>
     </div>
-  <% else %>
+  <% elsif current_account&.accountable_type=="Doctor" %>
     <div class="ui placeholder segment">
       <% @appointments.each do |appointment| %>
         <div class="ui segment">

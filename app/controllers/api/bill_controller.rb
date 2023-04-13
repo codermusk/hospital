@@ -7,7 +7,7 @@ class Api::BillController < Api::ApiController
   def check
     @bill = Bill.find(params[:id])
   rescue
-    head :not_found
+    render json: {message:"not found"} , status: 404
   end
 
   def index

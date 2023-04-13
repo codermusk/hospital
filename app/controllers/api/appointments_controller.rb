@@ -5,7 +5,7 @@ class Api::AppointmentsController < Api::ApiController
   def check
     @appointment = Appointment.find params[:id]
   rescue
-    head :not_found
+    render json: {message:"not found"} , status: 404
   end
 
   def book
