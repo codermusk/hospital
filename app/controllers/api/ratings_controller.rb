@@ -4,10 +4,11 @@ class Api::RatingsController < Api::ApiController
   before_action :check ,only: [:edit , :destroy , :show , :update]
 
 
+
     def check
       @rating = Rating.find params[:id]
     rescue
-      render json: {message:"not found"} , status: 404
+      render json: {error:"not found"} , status: 404
 
     end
 

@@ -1,11 +1,12 @@
 class Api::AppointmentsController < Api::ApiController
   before_action :doorkeeper_authorize!
   before_action :check , only: [:show , :edit , :destroy , :update]
+
   # before_action :checkpat , only: [:index , :book]
   def check
     @appointment = Appointment.find params[:id]
   rescue
-    render json: {message:"not found"} , status: 404
+    render json: {error:"not found"} , status: 404
   end
 
   def book

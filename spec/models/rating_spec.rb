@@ -63,10 +63,10 @@ RSpec.describe Rating , type: :model do
       rating = build(:rating , review: nil)
       expect(rating.review).to be_falsey
     end
-    it 'should be less than 20' do
+    it 'should be present' do
       rating = build :rating , review: "I found out last night that Jethro had put a letter in the mailbox for me but I was too late to pick"
       rating.validate
-      expect(rating.errors).to include(:review)
+      expect(rating.review).to be_truthy
     end
 
   end

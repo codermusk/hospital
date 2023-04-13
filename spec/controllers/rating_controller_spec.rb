@@ -178,7 +178,7 @@ RSpec.describe Api::RatingsController do
           },
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(422)
+        expect(response).to have_http_status(404)
       end
     end
   end

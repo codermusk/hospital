@@ -1,5 +1,6 @@
 class RatingsController < ApplicationController
   before_action :check , only: [:index]
+  before_action :authenticate_account! , only: [:create]
   def check
     if params[:ratable] == 'hospitals'
       begin

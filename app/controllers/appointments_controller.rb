@@ -1,5 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :check, except: [:book, :index ]
+  before_action :authenticate_account! , only: [:index,:book]
 
   def check
     @appointment = Appointment.find(params[:id].to_i)
