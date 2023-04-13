@@ -1,4 +1,4 @@
-<% if doctors %>
+<% if doctors.count>0 %>
   <div style="padding: 40px">
     <div class="ui grid">
   <%= render doctors %>
@@ -8,7 +8,7 @@
 <% else %>
   <div class="ui center middle aligned container">
     <div class="ui negative message">
-      No Hospitals Found !!
+      No Doctors Found !!
     </div>
   </div>
 <% end %>
