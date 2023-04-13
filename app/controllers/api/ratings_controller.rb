@@ -78,7 +78,7 @@ class Api::RatingsController < Api::ApiController
       if @rating.update rating_params
         render json: @rating, status: 200
       else
-        render json: { error: "un authorized" }, status: 422
+        render json: { error: "unprocessable entity" }, status: 422
       end
     else
       head :unauthorized

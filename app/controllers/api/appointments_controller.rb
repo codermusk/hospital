@@ -45,9 +45,8 @@ class Api::AppointmentsController < Api::ApiController
 
   def update
     if current_account.accountable.is_a?AdminUser or current_account.accountable_id==@appointment.doctor_id or current_account.accountable_id==@appointment.patient_id
-      status = Hash.new
-    status['status'] =1
-    if @appointment.update(status)
+
+    if @appointment.update appointment_params
       render json: @appointment , status: 200
     else
       render json: {error:@appointment.error} ,status: :unprocessable_entity
@@ -77,7 +76,7 @@ class Api::AppointmentsController < Api::ApiController
   def destroy
     if current_account&.accountable_id==@appointment.patient_id || current_account&.accountable_id==@appointment.doctor_id or current_account.accountable.is_a?(AdminUser)
       if @appointment.destroy
-        head 200
+        render json: {success:"deleted successfully"} , status: 200
       else
         head :unprocessable_entity
       end

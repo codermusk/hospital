@@ -55,7 +55,6 @@ class Api::PrescribtionsController < Api::ApiController
   end
 
   def show
-    @prescribtion = Prescribtion.find(params[:id])
     @patient = @prescribtion.appointment.patient
     if current_account.accountable == @patient || current_account.accountable.is_a?(AdminUser) || current_account.accountable==@prescribtion.appointment.doctor
 
