@@ -12,9 +12,10 @@ ActiveAdmin.register Rating do
     selectable_column
     id_column
     column  :ratable
+    column :patient
     column :rating
     column :review 
-    column :patient_id
+
 
 
   end
