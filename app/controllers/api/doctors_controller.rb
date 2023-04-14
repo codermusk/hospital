@@ -47,7 +47,7 @@ class Api::DoctorsController < Api::ApiController
 
       render json: @doctor , status:200
     else
-      head :unauthorized
+      head :forbidden
     end
 
     end
@@ -61,7 +61,7 @@ class Api::DoctorsController < Api::ApiController
       render json: {error:"UnProcessable Entity"} , status: 425
     end
     else
-      head :unauthorized
+      head :forbidden
     end
     end
 
@@ -74,7 +74,7 @@ class Api::DoctorsController < Api::ApiController
       render json: {error:"Method not allowed"} , status: 405
     end
     else
-    head :unauthorized
+    head :forbidden
     end
 
   end
@@ -87,7 +87,7 @@ class Api::DoctorsController < Api::ApiController
         render json: {error:"Method not allowed"} , status: 405
       end
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -95,7 +95,7 @@ class Api::DoctorsController < Api::ApiController
     if current_account.accountable.is_a?AdminUser or current_account.accountable==@doctor
       render json: @doctor , status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
 
   end

@@ -69,7 +69,7 @@ class Api::RatingsController < Api::ApiController
         head :unprocessable_entity
       end
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -82,7 +82,7 @@ class Api::RatingsController < Api::ApiController
         render json: { error: "unprocessable entity" }, status: 422
       end
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 

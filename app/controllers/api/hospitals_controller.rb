@@ -12,9 +12,7 @@ class Api::HospitalsController < Api::ApiController
   end
 
     def index
-      # if current_account&.accountable_type =='Doctor'
-      #   redirect_to doctor_appointments_path(current_account.accountable_id)
-      # end
+
       @hospitals = Hospital.all
       render json: @hospitals , status: 200
     end
@@ -30,7 +28,7 @@ class Api::HospitalsController < Api::ApiController
     if current_account.accountable.is_a? AdminUser
       render json: @hospital , status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -49,7 +47,7 @@ class Api::HospitalsController < Api::ApiController
         render json: {error: "Error Creating the Object"} , status: 420
       end
       else
-        head :unauthorized
+        head :forbidden
       end
     end
     def  update
@@ -61,7 +59,7 @@ class Api::HospitalsController < Api::ApiController
         render json:{error:"Not Updated"} , status:405
       end
       else
-        head :unauthorized
+        head :forbidden
       end
     end
     def  destroy
@@ -72,7 +70,7 @@ class Api::HospitalsController < Api::ApiController
         render json:{error:"Not Deleted"} , status:405
       end
       else
-        head :unauthorized
+        head :forbidden
       end
     end
 

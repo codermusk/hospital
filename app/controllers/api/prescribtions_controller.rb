@@ -23,7 +23,7 @@ class Api::PrescribtionsController < Api::ApiController
       @prescribtions = Prescribtion.all
       render @prescribtions
     else
-      head :unauthorized
+      head :forbidden
     end
   end
   def create
@@ -49,7 +49,7 @@ class Api::PrescribtionsController < Api::ApiController
       @prescribtion = Prescribtion.find(params[:id])
       render json: { message: "ok" }, status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
 
   end
@@ -60,7 +60,7 @@ class Api::PrescribtionsController < Api::ApiController
 
       render json: @prescribtion, status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -73,7 +73,7 @@ class Api::PrescribtionsController < Api::ApiController
 
       end
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -83,7 +83,7 @@ class Api::PrescribtionsController < Api::ApiController
         head 200
       end
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 

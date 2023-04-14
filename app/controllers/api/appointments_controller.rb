@@ -39,7 +39,7 @@ class Api::AppointmentsController < Api::ApiController
       # p @appointments
       render json:@appointments , status:200
     else
-      render json: {error:"not allowed method"} , status: :unauthorized
+      render json: {error:"not allowed method"} , status: :forbidden
     end
     end
   end
@@ -53,7 +53,7 @@ class Api::AppointmentsController < Api::ApiController
       render json: {error:@appointment.error} ,status: :unprocessable_entity
     end
     else
-      head :unauthorized
+      head :forbidden
     end
 
     end
@@ -62,7 +62,7 @@ class Api::AppointmentsController < Api::ApiController
     if current_account.accountable.is_a?AdminUser or current_account.accountable_id==@appointment.doctor_id or current_account.accountable_id==@appointment.patient_id
     render json:@appointment , status: 200
     else
-      head :unauthorized
+      head :forbidden
       end
   end
 
@@ -71,7 +71,7 @@ class Api::AppointmentsController < Api::ApiController
     if current_account.accountable.is_a?AdminUser or current_account.accountable_id==@appointment.doctor_id or current_account.accountable_id==@appointment.patient_id
       render json:@appointment , status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
   end
   def destroy
@@ -82,7 +82,7 @@ class Api::AppointmentsController < Api::ApiController
         head :unprocessable_entity
       end
     else
-      head :unauthorized
+      head :forbidden
 
     end
   end

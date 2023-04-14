@@ -15,7 +15,7 @@ class Api::BillController < Api::ApiController
       @bills = Bill.all
       render json: @bills , status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
   end
   def create
@@ -40,7 +40,7 @@ class Api::BillController < Api::ApiController
       @bill = Bill.find(params[:id])
       render json: @bill ,status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -53,7 +53,7 @@ class Api::BillController < Api::ApiController
       render json: {error:"Unproceeable entity"} , status: 422
     end
     else
-      head :unauthorized
+      head :forbidden
       end
   end
 
@@ -66,7 +66,7 @@ class Api::BillController < Api::ApiController
       render json: {error:"Unprocessable entity"} , status: 422
     end
     else
-      head :unauthorized
+      head :forbidden
     end
 
   end

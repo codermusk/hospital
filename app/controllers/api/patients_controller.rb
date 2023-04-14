@@ -15,7 +15,7 @@ class Api::PatientsController < Api::ApiController
     @patients = Patient.all
     render json: @patients, status: 200
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -25,7 +25,7 @@ class Api::PatientsController < Api::ApiController
       render json: @patient, status: 200
 
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
@@ -53,7 +53,7 @@ class Api::PatientsController < Api::ApiController
         render json: @patient, status: 200
         end
     else
-      head :unauthorized
+      head :forbidden
     end
 
   end
@@ -64,7 +64,7 @@ class Api::PatientsController < Api::ApiController
         render json: { success: "Deleted Successfully" }, status: 200
       end
     else
-      head :unauthorized
+      head :forbidden
     end
   end
 
