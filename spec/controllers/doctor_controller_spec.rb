@@ -132,7 +132,7 @@ RSpec.describe Api::DoctorsController do
         }
       end
       it 'dont allow' do
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
 
@@ -158,7 +158,7 @@ RSpec.describe Api::DoctorsController do
           }
         end
         it 'wont allow other user to edit' do
-          expect(response).to have_http_status(401)
+          expect(response).to have_http_status(403)
         end
       end
       context "when logged in as admin" do
@@ -183,7 +183,7 @@ RSpec.describe Api::DoctorsController do
           }
         end
         it 'wont allow other doctor to edit' do
-          expect(response).to have_http_status(401)
+          expect(response).to have_http_status(403)
         end
       end
       context "when logged in as related doctor" do
@@ -232,7 +232,7 @@ RSpec.describe Api::DoctorsController do
         end
         it "shows unauthorized error message" do
 
-          expect(response).to have_http_status 401
+          expect(response).to have_http_status 403
         end
       end
       context "when logged in as admin" do
@@ -264,7 +264,7 @@ RSpec.describe Api::DoctorsController do
             access_token: doctor_token.token
           }
 
-          expect(response).to have_http_status 401
+          expect(response).to have_http_status 403
 
         end
 
@@ -347,7 +347,7 @@ RSpec.describe Api::DoctorsController do
         }
       end
       it "throws unauthorized error" do
-        expect(response).to have_http_status 401
+        expect(response).to have_http_status 403
       end
     end
 
@@ -360,7 +360,7 @@ RSpec.describe Api::DoctorsController do
         }
       end
       it "throws unauthorized error" do
-        expect(response).to have_http_status 401
+        expect(response).to have_http_status 403
       end
     end
     context "when logged in as related doctor" do
@@ -371,7 +371,7 @@ RSpec.describe Api::DoctorsController do
         }
       end
       it "throws unauthorized error" do
-        expect(response).to have_http_status 401
+        expect(response).to have_http_status 403
       end
     end
 

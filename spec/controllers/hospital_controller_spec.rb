@@ -62,7 +62,7 @@ RSpec.describe Api::HospitalsController do
         }
       end
       it 'does not allows others to create hospital' do
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Api::HospitalsController do
         }
       end
       it 'wont allow doctor to create hospital' do
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -141,7 +141,7 @@ RSpec.describe Api::HospitalsController do
           id: hospital.id,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -186,7 +186,7 @@ RSpec.describe Api::HospitalsController do
         }
       end
       it 'shows unauthorized' do
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
 
@@ -201,7 +201,7 @@ RSpec.describe Api::HospitalsController do
       end
 
       it 'shows unauthorized' do
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -284,7 +284,7 @@ RSpec.describe Api::HospitalsController do
         }
       end
       it 'shows unauthorized error message' do
-        expect(response).to have_http_status 401
+        expect(response).to have_http_status 403
       end
     end
 
@@ -297,7 +297,7 @@ RSpec.describe Api::HospitalsController do
         }
       end
       it 'shows unauthorized error' do
-        expect(response).to have_http_status 401
+        expect(response).to have_http_status 403
       end
     end
   end

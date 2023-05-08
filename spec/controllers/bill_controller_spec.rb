@@ -31,13 +31,13 @@ RSpec.describe Api::BillController do
       get :index , params:{
         access_token: doctor_token.token
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
     it "cant be accessed by patient" do
       get :index , params:{
         access_token: patient_token.token
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe Api::BillController do
           id: bill.id ,
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "cant be accessed by other patients" do
@@ -101,7 +101,7 @@ RSpec.describe Api::BillController do
           id: bill.id ,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
 
@@ -158,7 +158,7 @@ RSpec.describe Api::BillController do
           },
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       it "Cant be updated by other doc" do
 
@@ -173,7 +173,7 @@ RSpec.describe Api::BillController do
           },
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       end
   end
@@ -201,7 +201,7 @@ RSpec.describe Api::BillController do
           id:bill.id,
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       it "can't be deleted by patients" do
         bill = create(:bill)
@@ -209,7 +209,7 @@ RSpec.describe Api::BillController do
           id:bill.id,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
     end

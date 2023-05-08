@@ -156,7 +156,7 @@ RSpec.describe Api::RatingsController do
           },
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "cant be done by doc" do
@@ -168,7 +168,7 @@ RSpec.describe Api::RatingsController do
           },
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       it "should be valid" do
         put :update, params: {
@@ -214,7 +214,7 @@ RSpec.describe Api::RatingsController do
           id: rating.id,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       it "cant be done by doctors" do
         rating = create(:rating)
@@ -222,7 +222,7 @@ RSpec.describe Api::RatingsController do
           id: rating.id,
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end

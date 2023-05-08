@@ -43,7 +43,7 @@ RSpec.describe Api::AppointmentsController do
           patient_id: 0 ,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "admin can access" do
@@ -96,7 +96,7 @@ RSpec.describe Api::AppointmentsController do
           access_token: doctor_token.token
 
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "should be valid " do
@@ -118,7 +118,7 @@ RSpec.describe Api::AppointmentsController do
           access_token: patient_token.token
 
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "can be accessed by that particular patient" do
@@ -174,7 +174,7 @@ RSpec.describe Api::AppointmentsController do
           access_token: doctor_token.token
 
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "should be valid " do
@@ -196,7 +196,7 @@ RSpec.describe Api::AppointmentsController do
           access_token: patient_token.token
 
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "can be accessed by that particular patient" do
@@ -272,7 +272,7 @@ RSpec.describe Api::AppointmentsController do
           }
 
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "should be valid " do
@@ -300,7 +300,7 @@ RSpec.describe Api::AppointmentsController do
           }
 
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "can be accessed by that particular patient" do
@@ -355,7 +355,7 @@ RSpec.describe Api::AppointmentsController do
           id: appointment.id ,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "can be deleted by that doctor" do
@@ -374,7 +374,7 @@ RSpec.describe Api::AppointmentsController do
           id: appointment.id ,
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
     end

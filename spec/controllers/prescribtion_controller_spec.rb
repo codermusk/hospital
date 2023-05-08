@@ -31,7 +31,7 @@ RSpec.describe Api::PrescribtionsController do
           access_token: doctor_token.token
         }
 
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it 'cant be accessed by patient' do
@@ -39,7 +39,7 @@ RSpec.describe Api::PrescribtionsController do
           access_token: patient_token.token
         }
 
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe Api::PrescribtionsController do
           id: prescribtion.id,
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       it "cant be accessed by other patients" do
         prescribtion = create(:prescribtion)
@@ -94,7 +94,7 @@ RSpec.describe Api::PrescribtionsController do
           id: prescribtion.id,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
     end
@@ -126,7 +126,7 @@ RSpec.describe Api::PrescribtionsController do
           access_token: patient_token.token,
           appointment_id: prescribtion.appointment_id
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       it "can be accessed by that doctor" do
         appointment = create(:appointment, doctor: doctor)
@@ -146,7 +146,7 @@ RSpec.describe Api::PrescribtionsController do
           access_token: doctor_token.token,
           appointment_id: prescribtion.appointment_id
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       it "cant be accessed by other patients" do
         prescribtion = create(:prescribtion)
@@ -155,7 +155,7 @@ RSpec.describe Api::PrescribtionsController do
           access_token: patient_token.token,
           appointment_id: prescribtion.appointment_id
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status 403
       end
 
     end
@@ -197,7 +197,7 @@ RSpec.describe Api::PrescribtionsController do
         }
 
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
 
     it "cant be accessed by any of the patients " do
@@ -212,7 +212,7 @@ RSpec.describe Api::PrescribtionsController do
         }
 
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
 
     it "can be updated by that doctor" do
@@ -237,7 +237,7 @@ RSpec.describe Api::PrescribtionsController do
           fees: 1300
         }
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
   end
 
@@ -267,7 +267,7 @@ RSpec.describe Api::PrescribtionsController do
         access_token: doctor_token.token,
 
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
 
     it "cant be deleted by any of the patients" do
@@ -277,7 +277,7 @@ RSpec.describe Api::PrescribtionsController do
         access_token: patient_token.token,
 
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
 
   end

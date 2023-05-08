@@ -29,14 +29,14 @@ RSpec.describe Api::PatientsController do
         get :index , params:{
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "wont allow patient to see" do
         get :index , params:{
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
     end
@@ -57,7 +57,7 @@ RSpec.describe Api::PatientsController do
           id: patient.id ,
           access_token: doctor_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
 
       end
 
@@ -84,7 +84,7 @@ RSpec.describe Api::PatientsController do
           id: patient.id ,
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
     context "edit" do
@@ -198,7 +198,7 @@ RSpec.describe Api::PatientsController do
           },
           access_token: patient_token.token
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it "should be a valid id" do
@@ -230,7 +230,7 @@ RSpec.describe Api::PatientsController do
         access_token: doctor_token.token
 
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
 
 
@@ -256,7 +256,7 @@ RSpec.describe Api::PatientsController do
         id: patient.id,
         access_token: patient_token.token
       }
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(403)
     end
 
     it "should be a valid id" do
