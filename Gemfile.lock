@@ -80,9 +80,6 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
     builder (3.2.4)
-    bullet (7.0.7)
-      activesupport (>= 3.0.0)
-      uniform_notifier (~> 1.11)
     byebug (11.1.3)
     capybara (3.38.0)
       addressable
@@ -299,7 +296,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.11)
       thread_safe (~> 0.1)
-    uniform_notifier (1.16.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -330,7 +326,6 @@ DEPENDENCIES
   activeadmin
   bootsnap (>= 1.4.2)
   bootstrap-sass
-  bullet (~> 7.0)
   byebug
   capybara (>= 2.15)
   devise
